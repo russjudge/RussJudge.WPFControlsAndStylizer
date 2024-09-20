@@ -1,0 +1,26 @@
+﻿<Window x:Class="Example.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Example"
+        xmlns:stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
+        mc:Ignorable="d"
+        
+        d:DataContext="{x:Type local:MainWindow}"
+        Title="Main Window Example (Style=MainWindow)" Height="450" Width="800">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+            <CheckBox
+                IsChecked="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive}"
+                Content="Set Activity as &quot;Active&quot;" />
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" 
+                Height="75" Width="75" Padding="5,5,5,5"
+                BorderBrush="Blue" BorderThickness="2,2,2,2" >
+            <stylizer:ActivityIndicator
+                BorderBrush="Green" BorderThickness="1,1,1,1"
+                />
+            </Border>
+        </StackPanel>
+    </DockPanel>
+</Window>

@@ -1,0 +1,140 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:RussJudge.WPFControlsAndStylizer"
+                    x:Name="StylizerResourceDictionary"
+                    xmlns:clr="clr-namespace:System;assembly=mscorlib"
+                    xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation">
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    
+    <!-- Standard Brushes -->
+    <SolidColorBrush x:Key="PrimaryColor">Maroon</SolidColorBrush>
+    <SolidColorBrush x:Key="SecondaryColor">Red</SolidColorBrush>
+    <SolidColorBrush x:Key="White">White</SolidColorBrush>
+
+    <SolidColorBrush x:Key="BackgroundColorStyle">White</SolidColorBrush>
+    <!-- End Standard Brushes -->
+    
+    
+
+    <!-- Activity Indicator -->
+    <Style x:Key="BaseActivityIndicatorStyle" TargetType="{x:Type local:ActivityIndicator}">
+        <Setter Property="EllipseBackground" Value="{DynamicResource White}" />
+        <Setter Property="Color1" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="Color2" Value="{DynamicResource SecondaryColor}" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="IsActive" Value="{Binding Source={x:Static local:GlobalControl.Current}, Path=IsActive}" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource Self}}" Value="True">
+                <Setter Property="Visibility" Value="Visible" />
+            </DataTrigger>
+            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource Self}}" Value="False">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style BasedOn="{StaticResource BaseActivityIndicatorStyle}" TargetType="{x:Type local:ActivityIndicator}" />
+    <!-- End Activity Indicator -->
+
+    
+    <!-- DialogWindowStyle -->
+
+    <Style
+        x:Key="DialogWindowStyle"
+        TargetType="{x:Type Window}">
+        <Setter Property="shell:WindowChrome.WindowChrome">
+            <Setter.Value>
+                <shell:WindowChrome />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowStyle" Value="None" />
+        <!--<Setter Property="BorderBrush" Value="{StaticResource RedWhiteGradientBrush2}" />-->
+        <Setter Property="ResizeMode" Value="NoResize" />
+
+        <Setter Property="MaxWidth" Value="1500" />
+        <Setter Property="MaxHeight" Value="900" />
+        <Setter Property="MinWidth" Value="300" />
+        <Setter Property="Topmost" Value="True" />
+
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}" UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border
+                        x:Name="WindowBorder"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid
+                            x:Name="LayoutRoot"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            ClipToBounds="True">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <DockPanel
+                                x:Name="WindowTitlePanel"
+                                Height="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"
+                                Margin="0,-1,0,0"
+                                Background="{TemplateBinding BorderBrush}">
+                                <Image
+                                    Width="{x:Static SystemParameters.SmallIconWidth}"
+                                    Height="{x:Static SystemParameters.SmallIconHeight}"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    Source="{TemplateBinding Icon}" />
+
+                                <ContentControl
+                                    DockPanel.Dock="Left"
+                                    Foreground="{DynamicResource BackgroundColorStyle}"
+                                    Margin="5,0,5,0"
+                                    FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+                                    Content="{TemplateBinding Tag}" />
+
+                                <!--<Button
+                                    Margin="0,0,-1,0"
+                                    HorizontalAlignment="Right"
+                                    Command="{x:Static SystemCommands.CloseWindowCommand}"
+                                    Content="X"
+                                    DockPanel.Dock="Right"
+                                    Style="{StaticResource TitleBarButton}" />-->
+
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+                                    FontWeight="{StaticResource Bold}"
+                                    Foreground="White"
+                                    Text="{TemplateBinding Title}" />
+                            </DockPanel>
+                            <AdornerDecorator
+                                Grid.Row="1"
+                                Margin="1,1,1,1"
+                                KeyboardNavigation.IsTabStop="False">
+                                <ContentPresenter
+                                    x:Name="MainContentPresenter"
+                                    Content="{TemplateBinding Content}"
+                                    KeyboardNavigation.TabNavigation="Cycle" />
+                            </AdornerDecorator>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+</ResourceDictionary>

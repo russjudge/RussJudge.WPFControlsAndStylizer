@@ -1,0 +1,26 @@
+﻿<Application
+    x:Class="Example.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Example"
+    xmlns:Stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources >
+        <ResourceDictionary>
+            <!-- Overridding the Stylized Brushes of StylizerDictionary -->
+            <Brush x:Key="PrimaryColor">Green</Brush>
+            <SolidColorBrush x:Key="SecondaryColor">Red</SolidColorBrush>
+            <SolidColorBrush x:Key="White">White</SolidColorBrush>
+            <SolidColorBrush x:Key="BackgroundColorStyle">White</SolidColorBrush>
+            
+            <!-- end Stylized Brushes override -->
+            
+            
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/RussJudge.WPFControlsAndStylizer;component/StylizerDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+        </ResourceDictionary>
+        
+    </Application.Resources>
+</Application>
