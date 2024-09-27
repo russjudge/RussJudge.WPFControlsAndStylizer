@@ -4,15 +4,23 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Example"
     xmlns:Stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
-    StartupUri="MainWindow.xaml">
+    StartupUri="MainWindow.xaml" ShutdownMode="OnLastWindowClose">
     <Application.Resources >
         <ResourceDictionary>
             <!-- Overridding the Stylized Brushes of StylizerDictionary -->
-            <Brush x:Key="PrimaryColor">Green</Brush>
-            <SolidColorBrush x:Key="SecondaryColor">Red</SolidColorBrush>
-            <SolidColorBrush x:Key="White">White</SolidColorBrush>
-            <SolidColorBrush x:Key="BackgroundColorStyle">White</SolidColorBrush>
-            
+            <Color x:Key="AttentionColor">LightCoral</Color>
+            <Color x:Key="PrimaryTextColor">Black</Color>
+            <Color x:Key="PrimaryInverseTextColor">White</Color>
+
+
+            <Color x:Key="PrimaryColor">LightSalmon</Color>
+            <Color x:Key="SecondaryColor">#FFEFD3D3</Color>
+            <Color x:Key="HighlightColor">#FFFFEEEE</Color>
+
+            <Color x:Key="PrimaryBorderColor">Maroon</Color>
+            <Color x:Key="SecondaryBorderColor">Red</Color>
+            <Color x:Key="BorderHighlightColor">LightSalmon</Color>
+
             <!-- end Stylized Brushes override -->
             
             

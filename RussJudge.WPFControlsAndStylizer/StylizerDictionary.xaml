@@ -1,26 +1,145 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:RussJudge.WPFControlsAndStylizer"
-                    x:Name="StylizerResourceDictionary"
-                    xmlns:clr="clr-namespace:System;assembly=mscorlib"
-                    xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:clr="clr-namespace:System;assembly=mscorlib"
+    xmlns:local="clr-namespace:RussJudge.WPFControlsAndStylizer"
+    xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
+    x:Name="StylizerResourceDictionary">
+
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    
-    <!-- Standard Brushes -->
-    <SolidColorBrush x:Key="PrimaryColor">Maroon</SolidColorBrush>
-    <SolidColorBrush x:Key="SecondaryColor">Red</SolidColorBrush>
-    <SolidColorBrush x:Key="White">White</SolidColorBrush>
+    <local:ValueMatchToVisibilityConverter x:Key="ValueMatchToVisibilityConverter" />
+    <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
-    <SolidColorBrush x:Key="BackgroundColorStyle">White</SolidColorBrush>
-    <!-- End Standard Brushes -->
-    
-    
+    <!--<Color x:Key="Primary">red</Color>-->
+    <Color x:Key="PrimaryDark">maroon</Color>
+    <Color x:Key="PrimaryDarkText">#242424</Color>
 
-    <!-- Activity Indicator -->
+    <!--<Color x:Key="Secondary">#DFD8F7</Color>-->
+    <Color x:Key="SecondaryDarkText">#9880e5</Color>
+    <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="Highlight">Chartreuse</Color>
+    <Color x:Key="HighlightBorderColor">maroon</Color>
+
+    <Color x:Key="HelpColor">#4da6ff</Color>
+    <Color x:Key="ActionColor">#20780a</Color>
+
+    <Color x:Key="OddLineColor">Beige</Color>
+    <Color x:Key="EvenLineColor">#f0ffff</Color>
+
+
+
+    <!--<SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
+    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
+    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
+    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
+
+    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}" />
+    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}" />
+    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}" />
+    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}" />
+    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}" />
+    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}" />
+    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}" />
+    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}" />-->
+
+
+    <Color x:Key="AttentionColor">#ff9238</Color>
+
+    <Color x:Key="PrimaryColor">LightSalmon</Color>
+    <Color x:Key="PrimaryBorderColor">Maroon</Color>
+
+    <Color x:Key="PrimaryTextColor">Black</Color>
+    <Color x:Key="PrimaryInverseTextColor">White</Color>
+
+    <!--<Color x:Key="LightPrimaryColor">LightCoral</Color>
+    <Color x:Key="LightPrimaryColorText">Black</Color>
+    <Color x:Key="LightPrimaryColorInverseText">White</Color>-->
+
+    <Color x:Key="HighlightColor">#FFFFEEEE</Color>
+    <Color x:Key="BorderHighlightColor">LightSalmon</Color>
+
+
+    <Color x:Key="SecondaryColor">#FFEFD3D3</Color>
+    <Color x:Key="SecondaryBorderColor">Red</Color>
+
+
+    <Color x:Key="PrimaryControlColor">DarkGray</Color>
+    <Color x:Key="HighlightControlColor">#CCCCFF</Color>
+    <Color x:Key="SecondaryControlColor">DarkGray</Color>
+
+    <Color x:Key="White">White</Color>
+    <Color x:Key="Black">Black</Color>
+    <Color x:Key="Magenta">#D600AA</Color>
+    <Color x:Key="Red">Red</Color>
+    <Color x:Key="Maroon">Maroon</Color>
+    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="OffBlack">#1f1f1f</Color>
+
+    <Color x:Key="DrabBorderColor">Gray</Color>
+
+    <Color x:Key="Gray100">#E1E1E1</Color>
+    <Color x:Key="Gray200">#C8C8C8</Color>
+    <Color x:Key="Gray300">#ACACAC</Color>
+    <Color x:Key="Gray400">#919191</Color>
+    <Color x:Key="Gray500">#6E6E6E</Color>
+    <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray900">#212121</Color>
+    <Color x:Key="Gray950">#141414</Color>
+
+
+    <!--  Standard Brushes  -->
+    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryBorderBrush" Color="{DynamicResource PrimaryBorderColor}" />
+
+
+    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}" />
+    <SolidColorBrush x:Key="SecondaryBorderBrush" Color="{DynamicResource SecondaryBorderColor}" />
+
+    <SolidColorBrush x:Key="PrimaryTextBrush" Color="{DynamicResource PrimaryTextColor}" />
+    <SolidColorBrush x:Key="PrimaryInverseTextBrush" Color="{DynamicResource PrimaryInverseTextColor}" />
+
+
+
+
+
+    <LinearGradientBrush x:Key="ControlBackgroundStyle" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="{DynamicResource PrimaryControlColor}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource HighlightControlColor}" />
+        <GradientStop Offset="1" Color="{DynamicResource SecondaryControlColor}" />
+    </LinearGradientBrush>
+
+
+
+    <LinearGradientBrush x:Key="BackgroundStyle" StartPoint="1,1" EndPoint="0,0">
+        <GradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource HighlightColor}" />
+        <GradientStop Offset="1" Color="{DynamicResource SecondaryColor}" />
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="BorderStyle" StartPoint="1,1" EndPoint="0,0">
+        <GradientStop Offset="0" Color="{DynamicResource PrimaryBorderColor}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource BorderHighlightColor}" />
+        <GradientStop Offset="1" Color="{DynamicResource SecondaryBorderColor}" />
+    </LinearGradientBrush>
+
+
+
+
+    <SolidColorBrush x:Key="AttentionBrush" Color="{DynamicResource AttentionColor}" />
+
+    <SolidColorBrush x:Key="ForegroundStyle" Color="{DynamicResource PrimaryTextColor}" />
+
+    <!--  End Standard Brushes  -->
+
+
+
+    <!--  Activity Indicator  -->
     <Style x:Key="BaseActivityIndicatorStyle" TargetType="{x:Type local:ActivityIndicator}">
-        <Setter Property="EllipseBackground" Value="{DynamicResource White}" />
-        <Setter Property="Color1" Value="{DynamicResource PrimaryColor}" />
-        <Setter Property="Color2" Value="{DynamicResource SecondaryColor}" />
+        <Setter Property="EllipseBackground" Value="{DynamicResource ControlBackgroundStyle}" />
+        <Setter Property="Color1" Value="{DynamicResource SecondaryBorderBrush}" />
+        <Setter Property="Color2" Value="{DynamicResource PrimaryBorderBrush}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="MinWidth" Value="32" />
@@ -36,13 +155,83 @@
         </Style.Triggers>
     </Style>
     <Style BasedOn="{StaticResource BaseActivityIndicatorStyle}" TargetType="{x:Type local:ActivityIndicator}" />
-    <!-- End Activity Indicator -->
+    <!--  End Activity Indicator  -->
 
-    
-    <!-- DialogWindowStyle -->
+
+
+
+    <!--  Title Bar buttton style  -->
+    <Style x:Key="TitleBarIconButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="WindowChrome.IsHitTestVisibleInChrome" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="MinWidth" Value="32" />
+        <Setter Property="Padding" Value="2,5,5,5" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryInverseTextBrush}" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="PART_grid">
+                        <ContentPresenter
+                            x:Name="PART_content"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+                    </Grid>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style
+        x:Key="TitleBarButtonStyle"
+        TargetType="{x:Type Button}"
+        BasedOn="{StaticResource TitleBarIconButtonStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid x:Name="PART_grid">
+                        <Rectangle
+                            x:Name="PART_rectangle"
+                            Margin="{TemplateBinding Margin}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="{DynamicResource AttentionBrush}"
+                            Opacity="0" />
+                        <ContentPresenter
+                            x:Name="PART_content"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="{DynamicResource ForegroundStyle}" />
+                            <Setter TargetName="PART_rectangle" Property="Opacity" Value="1" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="Background" Value="{DynamicResource BackgroundStyle}" />
+
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderStyle}" />
+        <Setter Property="Foreground" Value="{DynamicResource ForegroundStyle}" />
+        <Setter Property="BorderThickness" Value="2" />
+    </Style>
+    <!--  DialogWindowStyle  -->
 
     <Style
         x:Key="DialogWindowStyle"
+        BasedOn="{StaticResource BaseWindowStyle}"
         TargetType="{x:Type Window}">
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
@@ -50,11 +239,9 @@
             </Setter.Value>
         </Setter>
         <Setter Property="WindowStyle" Value="None" />
-        <!--<Setter Property="BorderBrush" Value="{StaticResource RedWhiteGradientBrush2}" />-->
+        <!--<Setter Property="BorderBrush" Value="{StaticResource BorderStyle}" />-->
         <Setter Property="ResizeMode" Value="NoResize" />
 
-        <Setter Property="MaxWidth" Value="1500" />
-        <Setter Property="MaxHeight" Value="900" />
         <Setter Property="MinWidth" Value="300" />
         <Setter Property="Topmost" Value="True" />
 
@@ -67,13 +254,13 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
                     <Border
-                        x:Name="WindowBorder"
+                        x:Name="PART_WindowBorder"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid
-                            x:Name="LayoutRoot"
+                            x:Name="PART_LayoutRoot"
                             Width="{TemplateBinding Width}"
                             Height="{TemplateBinding Height}"
                             Background="{TemplateBinding Background}"
@@ -85,39 +272,49 @@
                             </Grid.RowDefinitions>
 
                             <DockPanel
-                                x:Name="WindowTitlePanel"
+                                x:Name="PART_TitlePanel"
                                 Height="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"
                                 Margin="0,-1,0,0"
                                 Background="{TemplateBinding BorderBrush}">
-                                <Image
-                                    Width="{x:Static SystemParameters.SmallIconWidth}"
-                                    Height="{x:Static SystemParameters.SmallIconHeight}"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
+                                <Button
+                                    Command="{x:Static SystemCommands.ShowSystemMenuCommand}"
                                     DockPanel.Dock="Left"
-                                    Source="{TemplateBinding Icon}" />
+                                    Style="{StaticResource TitleBarIconButtonStyle}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                    <Image
+                                        Width="{x:Static SystemParameters.SmallIconWidth}"
+                                        Height="{x:Static SystemParameters.SmallIconHeight}"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Source="{TemplateBinding Icon}" />
+                                </Button>
 
                                 <ContentControl
-                                    DockPanel.Dock="Left"
-                                    Foreground="{DynamicResource BackgroundColorStyle}"
+                                    x:Name="PART_CustomTitleContent"
                                     Margin="5,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Path=(local:Attached.TitleContent), RelativeSource={RelativeSource Self}, Mode=OneWay}"
+                                    DockPanel.Dock="Left"
                                     FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
-                                    Content="{TemplateBinding Tag}" />
+                                    Foreground="{DynamicResource PrimaryInverseTextBrush}" />
 
-                                <!--<Button
-                                    Margin="0,0,-1,0"
+
+                                <!--  Content="{x:Static local:Attached.TitleContentProperty}"  -->
+                                <Button
+                                    Margin="0,0,0,0"
                                     HorizontalAlignment="Right"
+                                    HorizontalContentAlignment="Left"
                                     Command="{x:Static SystemCommands.CloseWindowCommand}"
-                                    Content="X"
                                     DockPanel.Dock="Right"
-                                    Style="{StaticResource TitleBarButton}" />-->
+                                    Style="{StaticResource TitleBarButtonStyle}">
+                                    <TextBlock HorizontalAlignment="Left" Text="X" />
+                                </Button>
 
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
-                                    FontWeight="{StaticResource Bold}"
-                                    Foreground="White"
+                                    Foreground="{DynamicResource PrimaryInverseTextBrush}"
                                     Text="{TemplateBinding Title}" />
                             </DockPanel>
                             <AdornerDecorator
@@ -125,7 +322,7 @@
                                 Margin="1,1,1,1"
                                 KeyboardNavigation.IsTabStop="False">
                                 <ContentPresenter
-                                    x:Name="MainContentPresenter"
+                                    x:Name="PART_Content"
                                     Content="{TemplateBinding Content}"
                                     KeyboardNavigation.TabNavigation="Cycle" />
                             </AdornerDecorator>
@@ -135,6 +332,428 @@
             </Setter.Value>
         </Setter>
     </Style>
+    <Style
+        x:Key="StandardWindowStyle"
+        BasedOn="{StaticResource BaseWindowStyle}"
+        TargetType="{x:Type Window}">
+        <Setter Property="shell:WindowChrome.WindowChrome">
+            <Setter.Value>
+                <shell:WindowChrome />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
+        <Setter Property="WindowChrome.WindowChrome">
+            <Setter.Value>
+                <WindowChrome CaptionHeight="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}" UseAeroCaptionButtons="False" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Window">
+                    <Border
+                        x:Name="PART_WindowBorder"
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid
+                            x:Name="PART_LayoutRoot"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Background="{TemplateBinding Background}"
+                            ClipToBounds="True">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel
+                                x:Name="PART_TitlePanel"
+                                Height="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"
+                                Margin="0,-1,0,0"
+                                Background="{TemplateBinding BorderBrush}">
+
+                                <Button
+                                    Command="{x:Static SystemCommands.ShowSystemMenuCommand}"
+                                    DockPanel.Dock="Left"
+                                    Style="{StaticResource TitleBarButtonStyle}"
+                                    WindowChrome.IsHitTestVisibleInChrome="True">
+
+                                    <Image
+                                        Width="{x:Static SystemParameters.SmallIconWidth}"
+                                        Height="{x:Static SystemParameters.SmallIconHeight}"
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Source="{TemplateBinding Icon}" />
+
+                                </Button>
+
+                                <StackPanel
+                                    x:Name="PART_CommandButtonsPanel"
+                                    Margin="0,0,-1,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Stretch"
+                                    Background="Transparent"
+                                    DockPanel.Dock="Right"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        Command="{x:Static SystemCommands.MinimizeWindowCommand}"
+                                        Content="&#x23e4;"
+                                        Style="{StaticResource TitleBarButtonStyle}" />
+                                    <Button
+                                        Command="{x:Static SystemCommands.RestoreWindowCommand}"
+                                        Style="{StaticResource TitleBarButtonStyle}"
+                                        Visibility="{TemplateBinding WindowState,
+                                                                     Converter={StaticResource ValueMatchToVisibilityConverter},
+                                                                     ConverterParameter='=|Normal|Collapsed|Visible'}">
+                                        <Grid>
+                                            <TextBlock Margin="3,0,0,0" Text="&#x2395;" />
+                                            <TextBlock Margin="0,3,0,0" Text="&#x2395;" />
+                                        </Grid>
+                                    </Button>
+
+                                    <Button
+                                        Command="{x:Static SystemCommands.MaximizeWindowCommand}"
+                                        Content="&#x2395;"
+                                        Style="{StaticResource TitleBarButtonStyle}"
+                                        Visibility="{TemplateBinding WindowState,
+                                                                     Converter={StaticResource ValueMatchToVisibilityConverter},
+                                                                     ConverterParameter='=|Normal|Visible|Collapsed'}" />
+
+                                    <Button
+                                        Margin="0,0,0,0"
+                                        Command="{x:Static SystemCommands.CloseWindowCommand}"
+                                        Content="X"
+                                        Style="{StaticResource TitleBarButtonStyle}" />
+                                </StackPanel>
+                                <ContentControl
+                                    x:Name="PART_CustomTitleContent"
+                                    Margin="5,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Path=(local:Attached.TitleContent), Mode=OneWay}"
+                                    DockPanel.Dock="Left"
+                                    FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+                                    Foreground="{DynamicResource PrimaryInverseTextBrush}" />
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+                                    Foreground="{DynamicResource PrimaryInverseTextBrush}"
+                                    Text="{TemplateBinding Title}" />
+
+                            </DockPanel>
+
+                            <AdornerDecorator
+                                Grid.Row="1"
+                                Margin="1,1,1,1"
+                                KeyboardNavigation.IsTabStop="False">
+                                <ContentPresenter
+                                    x:Name="PART_MainContent"
+                                    Content="{TemplateBinding Content}"
+                                    KeyboardNavigation.TabNavigation="Cycle" />
+                            </AdornerDecorator>
+                            <ResizeGrip
+                                x:Name="PART_ResizeGrip"
+                                Grid.Row="1"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                IsTabStop="False"
+                                Visibility="Hidden"
+                                WindowChrome.ResizeGripDirection="BottomRight" />
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <ControlTemplate x:Key="PlaceholderTextBoxTemplate" TargetType="{x:Type TextBox}">
 
 
+        <!--  TextBox uses a ScrollViewer named PART_ContentHost as its content-presenter  -->
+        <!--Content="{Binding Path=(local:Attached.WatermarkText), Mode=OneWay}"
+        Content="{TemplateBinding ToolTip}"-->
+        <Border x:Name="PART_Border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+            <Grid>
+                <ScrollViewer 
+                    x:Name="PART_ContentHost"
+                    Focusable="false"
+                    HorizontalScrollBarVisibility="Hidden"
+                    VerticalScrollBarVisibility="Hidden" />
+                <ContentPresenter
+                        x:Name="PART_PlaceholderText"
+                        Margin="5,0,0,0"
+                        Content="{Binding Path=(local:Attached.Placeholder), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                        Opacity="0.5"
+                        Visibility="{TemplateBinding Text,
+                                  Converter={StaticResource NullToVisibilityConverter},
+                                  ConverterParameter='Visible|Collapsed'}" />
+            </Grid>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualState x:Name="Disabled">
+                        <Storyboard>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="0" Value="{x:Static SystemColors.InactiveBorderColor}" />
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="ReadOnly">
+                        <Storyboard>
+                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
+                                <EasingColorKeyFrame KeyTime="0" Value="{x:Static SystemColors.InactiveBorderColor}" />
+                            </ColorAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+                <VisualStateGroup x:Name="FocusStates">
+                    <VisualState x:Name="Focused">
+                        <Storyboard>
+                            <DoubleAnimation
+                                BeginTime="00:00:00.000"
+                                Storyboard.TargetName="PART_PlaceholderText"
+                                Storyboard.TargetProperty="Opacity"
+                                From="1"
+                                To="0"
+                                Duration="00:00:00.300" />
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Unfocused">
+                        <Storyboard>
+                            <DoubleAnimation
+                                BeginTime="00:00:00.000"
+                                Storyboard.TargetName="PART_PlaceholderText"
+                                Storyboard.TargetProperty="Opacity"
+                                From="0"
+                                To="0.5"
+                                Duration="00:00:00.500" />
+
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="PART_Border" Property="Opacity" Value="0.56"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{x:Static SystemColors.HighlightBrush}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="true">
+                <Setter TargetName="PART_Border" Property="BorderBrush" Value="{x:Static SystemColors.HighlightBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <LinearGradientBrush
+        x:Key="GlassOverlayBrushStyle"
+        Opacity="0.75"
+        StartPoint="0,0"
+        EndPoint="1,1" >
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.2" Color="WhiteSmoke" />
+            <GradientStop Offset="0.4" Color="Transparent" />
+            <GradientStop Offset="0.5" Color="WhiteSmoke" />
+            <GradientStop Offset="0.75" Color="Transparent" />
+            <GradientStop Offset="0.9" Color="WhiteSmoke" />
+            <GradientStop Offset="1" Color="Transparent" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="GlassOverlayStrokeBrushStyle" StartPoint="0.5,0" EndPoint="0.5,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.0" Color="LightBlue" />
+            <GradientStop Offset="1.0" Color="Gray" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <Style x:Key="GlassOverlay" TargetType="{x:Type Rectangle}">
+        <Setter Property="Opacity" Value="0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Fill" Value="{StaticResource GlassOverlayBrushStyle}" />
+        <Setter Property="RadiusX" Value="10" />
+        <Setter Property="RadiusY" Value="10" />
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5" />
+        <Setter Property="Stroke" Value="{StaticResource GlassOverlayStrokeBrushStyle}" />
+        <Setter Property="StrokeThickness" Value="2" />
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <RotateTransform />
+                </TransformGroup>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BitmapEffect">
+            <Setter.Value>
+                <BevelBitmapEffect />
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+
+
+
+    <Style x:Key="ImportantButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource ControlBackgroundStyle}" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid
+                        Width="{TemplateBinding Width}"
+                        Height="{TemplateBinding Height}"
+                        ClipToBounds="True">
+
+                        <Rectangle
+                            x:Name="PART_OuterRectangle"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="Transparent"
+                            RadiusX="10"
+                            RadiusY="10"
+                            Stroke="{TemplateBinding Background}"
+                            StrokeThickness="3" />
+                        <Rectangle
+                            x:Name="PART_InnerRectangle"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="{TemplateBinding Background}"
+                            RadiusX="10"
+                            RadiusY="10"
+                            Stroke="Transparent"
+                            StrokeThickness="10" />
+
+                        <Rectangle
+                            x:Name="PART_GlassOverlay"
+                            Style="{StaticResource GlassOverlay}" />
+
+
+                        <ContentPresenter
+                            x:Name="PART_ContentPresenter"
+                            Margin="10"
+                            Content="{TemplateBinding Content}" />
+                        <Rectangle
+                            x:Name="PART_DisableRectangle"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="#dddddd"
+                            Opacity="0"
+                            RadiusX="10"
+                            RadiusY="10"
+                            StrokeThickness="3" />
+
+                        <!--<controls:ActivityIndicator
+                        Width="{Binding ElementName=myContentPresenter, Path=ActualWidth}"
+                        Height="{Binding ElementName=myContentPresenter, Path=ActualHeight}"
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top" />-->
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter
+                                TargetName="PART_OuterRectangle"
+                                Property="Rectangle.Stroke"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+
+                            <Setter TargetName="PART_GlassOverlay" Property="Rectangle.Opacity" Value="1" />
+                            <Setter TargetName="PART_ContentPresenter" Property="ContentPresenter.BitmapEffect">
+                                <Setter.Value>
+                                    <BlurBitmapEffect Radius="1" />
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.5"
+                                            By="0.1"
+                                            Storyboard.TargetName="PART_DisableRectangle"
+                                            Storyboard.TargetProperty="(Rectangle.Opacity)"
+                                            To="0.7"
+                                            Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+
+                                        <DoubleAnimation
+                                            BeginTime="0:0:0.5"
+                                            By="-0.1"
+                                            Storyboard.TargetName="PART_DisableRectangle"
+                                            Storyboard.TargetProperty="(Rectangle.Opacity)"
+                                            To="0.0"
+                                            Duration="0:0:0.5" />
+
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="true">
+                            <Setter TargetName="PART_GlassOverlay" Property="Rectangle.Opacity" Value="1" />
+                            <Setter
+                                TargetName="PART_OuterRectangle"
+                                Property="Rectangle.Stroke"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter TargetName="PART_GlassOverlay" Property="Rectangle.Opacity" Value="1" />
+                        </Trigger>
+
+                        <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard Name="PART_MouseEnterBeginStoryboard">
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            By="-0.1"
+                                            Storyboard.TargetName="PART_GlassOverlay"
+                                            Storyboard.TargetProperty="(Rectangle.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)"
+                                            Duration="0:0:0.5" />
+                                        <DoubleAnimation
+                                            By="-0.1"
+                                            Storyboard.TargetName="PART_GlassOverlay"
+                                            Storyboard.TargetProperty="(Rectangle.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)"
+                                            Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                            <EventTrigger.Actions>
+                                <StopStoryboard BeginStoryboardName="PART_MouseEnterBeginStoryboard" />
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.Click">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation
+                                            By="360"
+                                            Storyboard.TargetName="PART_GlassOverlay"
+                                            Storyboard.TargetProperty="(Rectangle.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)"
+                                            Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
 </ResourceDictionary>

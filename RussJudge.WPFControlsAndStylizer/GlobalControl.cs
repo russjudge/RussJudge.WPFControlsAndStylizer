@@ -10,7 +10,11 @@ namespace RussJudge.WPFControlsAndStylizer
 {
     public class GlobalControl : DependencyObject 
     {
-        private GlobalControl() { }
+        private GlobalControl() 
+        {
+            
+        }
+        
         public static GlobalControl Current { get; set; } = new();
 
         public static readonly DependencyProperty IsActiveProperty =

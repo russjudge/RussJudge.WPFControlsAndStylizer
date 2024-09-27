@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
@@ -23,7 +24,7 @@ namespace RussJudge.WPFControlsAndStylizer
     {
         public ActivityIndicator()
         {
-            
+
             InitializeComponent();
         }
 
@@ -93,27 +94,22 @@ namespace RussJudge.WPFControlsAndStylizer
         {
             if (d is ActivityIndicator me)
             {
-                //if (me.Visibility == Visibility.Visible)
-                //{
-                    if (me.isRendered)
-                    {
+                if (me.isRendered)
+                {
 
-                        if (me.IsActive)
-                        {
-                            //me.Visibility = Visibility.Visible;
-                            me.StartArcAnimation();
-                        }
-                        else
-                        {
-                            me.StopArcAnimation();
-                           //me.Visibility = Visibility.Collapsed;
-                        }
+                    if (me.IsActive)
+                    {
+                        me.StartArcAnimation();
                     }
                     else
                     {
-                        me.RenderArc();
+                        me.StopArcAnimation();
                     }
-                //}
+                }
+                else
+                {
+                    me.RenderArc();
+                }
             }
         }
         bool isRendered = false;
@@ -145,7 +141,7 @@ namespace RussJudge.WPFControlsAndStylizer
             }
             if (baseline == 0)
             {
-               
+
                 baseline = 32;
             }
 
@@ -159,7 +155,7 @@ namespace RussJudge.WPFControlsAndStylizer
 
 
             double strokethickness = workItem * 0.2;  //Stroke thinkness
-            
+
             double radius = (workItem * 0.9) / 2;
 
 
@@ -171,11 +167,16 @@ namespace RussJudge.WPFControlsAndStylizer
             double end_angle = Math.PI;
             double angle_diff = end_angle - start_angle;
 
+
+            //double left = center.X - radius;
+            //double top = center.Y - radius;
+
             //Background circle.
             Ellipse ellipse = new()
             {
-                Width = workItem,
-                Height = workItem,
+                Margin = new Thickness(adjust, adjust, 0, 0),
+                Width = workItem * 1.1,
+                Height = workItem * 1.1,
                 Opacity = 0.5,
                 Stroke = EllipseBackground,
                 StrokeThickness = strokethickness
@@ -183,6 +184,8 @@ namespace RussJudge.WPFControlsAndStylizer
 
 
             MyContent.Children.Add(ellipse);
+
+
 
             //First Arc
             ArcSegment arcSegment = new()
@@ -227,7 +230,7 @@ namespace RussJudge.WPFControlsAndStylizer
             Canvas.SetLeft(arc_path, adjust);
             Canvas.SetTop(arc_path, adjust);
 
-            
+
 
             MyContent.Children.Add(arc_path);
 
@@ -256,7 +259,7 @@ namespace RussJudge.WPFControlsAndStylizer
             else
             {
                 StopArcAnimation();
-               // Visibility= Visibility.Collapsed;   
+                // Visibility= Visibility.Collapsed;   
             }
             isRendered = true;
         }
@@ -301,7 +304,7 @@ namespace RussJudge.WPFControlsAndStylizer
         {
             RenderArc();
 
-            
+
         }
     }
 }

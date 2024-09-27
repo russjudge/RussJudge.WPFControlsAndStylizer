@@ -1,0 +1,19 @@
+﻿<Window
+    x:Class="Example.DialogWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Example"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
+    Title="Dialog Window"
+    Width="800"
+    Height="450"
+    stylizer:Attached.TitleContent="Test"
+    stylizer:Attached.IsStylized="True"
+    Icon="/Resources/rjicon2.png"
+    Style="{StaticResource DialogWindowStyle}"
+    mc:Ignorable="d">
+    <Window.Resources />
+    <Grid />
+</Window>
