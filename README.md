@@ -12,6 +12,7 @@ For an example of how to use this, see the example project at https://github.com
 ## Styles
 ### Colors
 These colors can be overridden in Resources to change colors of choice.
+
 | Color | Description |
 | - | - |
 | AttentionColor | Used on mouse-over on Window title bar on DialogWindowStyle and StandardWindowStyle.
@@ -29,6 +30,7 @@ These colors can be overridden in Resources to change colors of choice.
 
 ### Brushes
 These brushes can be overridden in Resources to change colors of choice.
+
 | Brush | Description |
 | - | - |
 | PrimaryBorderBrush | Brush defined to PrimaryBorderColor.  Used as default Color2 in the ActivityIndicator.
@@ -69,6 +71,7 @@ Using RussJudge.WPFControlsAndStylizer.GlobalControl.Current.IsActive allows for
 appear and be controlled from a single location.
 
 There are three color properties that can be stylized:
+
 | Property | Description |
 | - | - |
 | EllipseBackground | The background circle | Default is the style key "White".
