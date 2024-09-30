@@ -10,18 +10,48 @@ For an example of how to use this, see the example project at https://github.com
 
 
 ## Styles
-### Colors and Brushes
-| PrimaryColor | Used for the primary color style of all stylized controls.  Default is Maroon.
-| SecondaryColor | Used for the secondary color style of all stylized controls.  Default is Red.
-| White | The stylized color to identify as "White".
+### Colors
+These colors can be overridden in Resources to change colors of choice.
+| AttentionColor | Used on mouse-over on Window title bar on DialogWindowStyle and StandardWindowStyle.
+| PrimaryColor | Used for the primary color style of all stylized controls.
+| PrimaryBorderColor | Used for the primary border color style of all stylized controls.
+| PrimaryTextColor | The primary foreground color.
+| PrimaryInverseTextColor | The inverse primary color of the foreground.
+| HighlightColor | Used as the center highlight color of the background of stylized controls.
+| BorderHightlightColor | Used as the center highlight color of the background of the border of stylized controls.
+| SecondaryColor | Used for the secondary color style of all stylized controls.
+| SecondaryBorderColor | Used for the secondary color style for borders of all stylized controls.
+| PrimaryControlColor | Primary background color of stylized controls.
+| HighlightControlColor | Center highlight background color of stylized controls.
+| SecondaryControlColor | Secondary background color of stylized controls.
+
+### Brushes
+These brushes can be overridden in Resources to change colors of choice.
+| PrimaryBorderBrush | Brush defined to PrimaryBorderColor.  Used as default Color2 in the ActivityIndicator.
+| SecondaryBorderBrush | Brush defined to SecondaryBorderColor.  Used as default Color1 in the ActivityIndicator.
+| PrimaryTextBrush | Brush defined to PrimaryTextColor, used on the titlebar of the stylized windows.
+| PrimaryInverseTextBrush | Brush defined to PrimaryInverseTextColor, used on the titlebar of the stylized windows.
+| ControlBackgroundStyle | Brush used for the background of controls (specifically ImportantButtonStyle).
+| BackgroundStyle | Background style brush.
+| BorderStyle |  Border Style Brush
+| AttentionBrush | Brush using AttentionColor.
+| ForegroundStyle | Foreground brush using PrimaryTextColor.
 
 ### Templates
 
 #### DialogWindowStyle
+Stylizes a window to behave like a dialog.  If you use the attached property Attached.TitleContent, the object defined in Attached.TitleContent will
+be presented in the Title bar.
 
 #### StandardWindowStyle
+Stylizes a window.  If you use the attached property Attached.TitleContent, the object defined in Attached.TitleContent will
+be presented in the Title bar.
 
 #### ImportantButtonStyle
+Stylizes a button to include animation on MouseOver.
+
+#### TitleBarButtonStyle
+Stylizes a button that is used in the TitleContent attached property.
 
 ## Controls
 
@@ -39,6 +69,9 @@ There are three color properties that can be stylized:
 | EllipseBackground | The background circle | Default is the style key "White".
 | Color1 | The primary color | Default is the style key "PrimaryColor".
 | Color2 | The secondary color | Default is the style key "SecondaryColor".
+
+By default, the ActivityIndicator is a circle.  However, by setting the Height and Width differently, an elllipse is formed that will create a differently
+behaving activity indicator.
 
 
 ## Attached Properties

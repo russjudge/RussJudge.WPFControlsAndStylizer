@@ -147,36 +147,38 @@ namespace RussJudge.WPFControlsAndStylizer
 
             double workItem = baseline * 0.75; // 0.9;// * 0.75; //* 1.5;
 
+            double workWidth = ActualWidth * 0.75;
+            double workHeight = ActualHeight * 0.75;
+
+
             MyContent.Children.Clear();
 
 
             double adjust = workItem * 0.1;  //top-left corner placement.
-
+            double adjustWidth = workWidth * 0.1;
+            double adjustHeight = workHeight * 0.1;
 
 
             double strokethickness = workItem * 0.2;  //Stroke thinkness
 
             double radius = (workItem * 0.9) / 2;
+            double radiusWidth = (workWidth * 0.9) / 2;
+            double radiusHeight = (workHeight * 0.9) / 2;
+
+            //Vector center = new(radius + adjust, radius + adjust);
+            Vector center = new(radiusWidth + adjustWidth, radiusHeight + adjustHeight);
 
 
-            Vector center = new(radius + adjust, radius + adjust);
+            const double start_angle = 0;
+            const double end_angle = Math.PI;
 
-            double start_angle = 0;
-
-
-            double end_angle = Math.PI;
-            double angle_diff = end_angle - start_angle;
-
-
-            //double left = center.X - radius;
-            //double top = center.Y - radius;
 
             //Background circle.
             Ellipse ellipse = new()
             {
-                Margin = new Thickness(adjust, adjust, 0, 0),
-                Width = workItem * 1.1,
-                Height = workItem * 1.1,
+                Margin = new Thickness(adjustWidth, adjustHeight, 0, 0),
+                Width = workWidth * 1.1,
+                Height = workHeight * 1.1,
                 Opacity = 0.5,
                 Stroke = EllipseBackground,
                 StrokeThickness = strokethickness
@@ -190,10 +192,11 @@ namespace RussJudge.WPFControlsAndStylizer
             //First Arc
             ArcSegment arcSegment = new()
             {
-                IsLargeArc = angle_diff >= Math.PI,
-                Point = new Point(center.X + radius * Math.Cos(end_angle), center.Y + radius * Math.Sin(end_angle)),
+                IsLargeArc = false,
+                //Point = new Point(center.X + radius * Math.Cos(end_angle), center.Y + radius * Math.Sin(end_angle)),
+                Point = new Point(center.X + radiusWidth * Math.Cos(end_angle), center.Y + radiusHeight * Math.Sin(end_angle)),
 
-                Size = new Size(radius, radius),
+                Size = new Size(radiusWidth, radiusHeight),
                 SweepDirection = SweepDirection.Clockwise
             };
 
@@ -227,8 +230,8 @@ namespace RussJudge.WPFControlsAndStylizer
                 RenderTransform = _rotateTransform
             };
 
-            Canvas.SetLeft(arc_path, adjust);
-            Canvas.SetTop(arc_path, adjust);
+            Canvas.SetLeft(arc_path, adjustWidth);
+            Canvas.SetTop(arc_path, adjustHeight);
 
 
 
@@ -246,8 +249,8 @@ namespace RussJudge.WPFControlsAndStylizer
                 RenderTransform = _rotateTransform2
             };
 
-            Canvas.SetLeft(arc_path, adjust);
-            Canvas.SetTop(arc_path, adjust);
+            Canvas.SetLeft(arc_path, adjustWidth);
+            Canvas.SetTop(arc_path, adjustHeight);
 
 
             MyContent.Children.Add(arc_path);

@@ -10,40 +10,6 @@
     <local:ValueMatchToVisibilityConverter x:Key="ValueMatchToVisibilityConverter" />
     <local:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 
-    <!--<Color x:Key="Primary">red</Color>-->
-    <Color x:Key="PrimaryDark">maroon</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-
-    <!--<Color x:Key="Secondary">#DFD8F7</Color>-->
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
-    <Color x:Key="Highlight">Chartreuse</Color>
-    <Color x:Key="HighlightBorderColor">maroon</Color>
-
-    <Color x:Key="HelpColor">#4da6ff</Color>
-    <Color x:Key="ActionColor">#20780a</Color>
-
-    <Color x:Key="OddLineColor">Beige</Color>
-    <Color x:Key="EvenLineColor">#f0ffff</Color>
-
-
-
-    <!--<SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}" />
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}" />
-    <SolidColorBrush x:Key="TertiaryBrush" Color="{StaticResource Tertiary}" />
-    <SolidColorBrush x:Key="WhiteBrush" Color="{StaticResource White}" />
-    <SolidColorBrush x:Key="BlackBrush" Color="{StaticResource Black}" />
-
-    <SolidColorBrush x:Key="Gray100Brush" Color="{StaticResource Gray100}" />
-    <SolidColorBrush x:Key="Gray200Brush" Color="{StaticResource Gray200}" />
-    <SolidColorBrush x:Key="Gray300Brush" Color="{StaticResource Gray300}" />
-    <SolidColorBrush x:Key="Gray400Brush" Color="{StaticResource Gray400}" />
-    <SolidColorBrush x:Key="Gray500Brush" Color="{StaticResource Gray500}" />
-    <SolidColorBrush x:Key="Gray600Brush" Color="{StaticResource Gray600}" />
-    <SolidColorBrush x:Key="Gray900Brush" Color="{StaticResource Gray900}" />
-    <SolidColorBrush x:Key="Gray950Brush" Color="{StaticResource Gray950}" />-->
-
-
     <Color x:Key="AttentionColor">#ff9238</Color>
 
     <Color x:Key="PrimaryColor">LightSalmon</Color>
@@ -52,10 +18,7 @@
     <Color x:Key="PrimaryTextColor">Black</Color>
     <Color x:Key="PrimaryInverseTextColor">White</Color>
 
-    <!--<Color x:Key="LightPrimaryColor">LightCoral</Color>
-    <Color x:Key="LightPrimaryColorText">Black</Color>
-    <Color x:Key="LightPrimaryColorInverseText">White</Color>-->
-
+    
     <Color x:Key="HighlightColor">#FFFFEEEE</Color>
     <Color x:Key="BorderHighlightColor">LightSalmon</Color>
 
@@ -68,34 +31,10 @@
     <Color x:Key="HighlightControlColor">#CCCCFF</Color>
     <Color x:Key="SecondaryControlColor">DarkGray</Color>
 
-    <Color x:Key="White">White</Color>
-    <Color x:Key="Black">Black</Color>
-    <Color x:Key="Magenta">#D600AA</Color>
-    <Color x:Key="Red">Red</Color>
-    <Color x:Key="Maroon">Maroon</Color>
-    <Color x:Key="MidnightBlue">#190649</Color>
-    <Color x:Key="OffBlack">#1f1f1f</Color>
-
-    <Color x:Key="DrabBorderColor">Gray</Color>
-
-    <Color x:Key="Gray100">#E1E1E1</Color>
-    <Color x:Key="Gray200">#C8C8C8</Color>
-    <Color x:Key="Gray300">#ACACAC</Color>
-    <Color x:Key="Gray400">#919191</Color>
-    <Color x:Key="Gray500">#6E6E6E</Color>
-    <Color x:Key="Gray600">#404040</Color>
-    <Color x:Key="Gray900">#212121</Color>
-    <Color x:Key="Gray950">#141414</Color>
-
 
     <!--  Standard Brushes  -->
-    <SolidColorBrush x:Key="PrimaryBrush" Color="{DynamicResource PrimaryColor}" />
     <SolidColorBrush x:Key="PrimaryBorderBrush" Color="{DynamicResource PrimaryBorderColor}" />
-
-
-    <SolidColorBrush x:Key="SecondaryBrush" Color="{DynamicResource SecondaryColor}" />
     <SolidColorBrush x:Key="SecondaryBorderBrush" Color="{DynamicResource SecondaryBorderColor}" />
-
     <SolidColorBrush x:Key="PrimaryTextBrush" Color="{DynamicResource PrimaryTextColor}" />
     <SolidColorBrush x:Key="PrimaryInverseTextBrush" Color="{DynamicResource PrimaryInverseTextColor}" />
 
@@ -142,8 +81,8 @@
         <Setter Property="Color2" Value="{DynamicResource PrimaryBorderBrush}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="MinWidth" Value="32" />
-        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinWidth" Value="24" />
+        <Setter Property="MinHeight" Value="24" />
         <Setter Property="IsActive" Value="{Binding Source={x:Static local:GlobalControl.Current}, Path=IsActive}" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource Self}}" Value="True">
@@ -239,7 +178,6 @@
             </Setter.Value>
         </Setter>
         <Setter Property="WindowStyle" Value="None" />
-        <!--<Setter Property="BorderBrush" Value="{StaticResource BorderStyle}" />-->
         <Setter Property="ResizeMode" Value="NoResize" />
 
         <Setter Property="MinWidth" Value="300" />
@@ -288,18 +226,6 @@
                                         VerticalAlignment="Center"
                                         Source="{TemplateBinding Icon}" />
                                 </Button>
-
-                                <ContentControl
-                                    x:Name="PART_CustomTitleContent"
-                                    Margin="5,0,5,0"
-                                    VerticalAlignment="Center"
-                                    Content="{Binding Path=(local:Attached.TitleContent), RelativeSource={RelativeSource Self}, Mode=OneWay}"
-                                    DockPanel.Dock="Left"
-                                    FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
-                                    Foreground="{DynamicResource PrimaryInverseTextBrush}" />
-
-
-                                <!--  Content="{x:Static local:Attached.TitleContentProperty}"  -->
                                 <Button
                                     Margin="0,0,0,0"
                                     HorizontalAlignment="Right"
@@ -310,9 +236,22 @@
                                     <TextBlock HorizontalAlignment="Left" Text="X" />
                                 </Button>
 
+                                <ContentControl
+                                    x:Name="PART_CustomTitleContent"
+                                    Margin="5,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Content="{Binding Path=(local:Attached.TitleContent), Mode=OneWay}"
+                                    DockPanel.Dock="Left"
+                                    FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
+                                    Foreground="{DynamicResource PrimaryInverseTextBrush}" />
+
+
+                                <!--  Content="{x:Static local:Attached.TitleContentProperty}"  -->
+
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
                                     FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
                                     Foreground="{DynamicResource PrimaryInverseTextBrush}"
                                     Text="{TemplateBinding Title}" />
@@ -472,8 +411,7 @@
 
 
         <!--  TextBox uses a ScrollViewer named PART_ContentHost as its content-presenter  -->
-        <!--Content="{Binding Path=(local:Attached.WatermarkText), Mode=OneWay}"
-        Content="{TemplateBinding ToolTip}"-->
+
         <Border x:Name="PART_Border"
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
@@ -610,6 +548,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Grid
+                        Margin="0,0,3,3"
                         Width="{TemplateBinding Width}"
                         Height="{TemplateBinding Height}"
                         ClipToBounds="True">
@@ -641,6 +580,7 @@
                         <ContentPresenter
                             x:Name="PART_ContentPresenter"
                             Margin="10"
+                            HorizontalAlignment="Center"
                             Content="{TemplateBinding Content}" />
                         <Rectangle
                             x:Name="PART_DisableRectangle"
@@ -652,12 +592,6 @@
                             RadiusY="10"
                             StrokeThickness="3" />
 
-                        <!--<controls:ActivityIndicator
-                        Width="{Binding ElementName=myContentPresenter, Path=ActualWidth}"
-                        Height="{Binding ElementName=myContentPresenter, Path=ActualHeight}"
-                        Margin="0,5,0,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Top" />-->
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

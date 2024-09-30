@@ -5,6 +5,19 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationIcon>rjicon.ico</ApplicationIcon>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>WPF Controls and Stylizer</Title>
+    <Authors>Russ Judge</Authors>
+    <Description>A collection of styles that I've thrown together and found useful.</Description>
+    <Copyright>Copyright (c) Russ Judge 2024</Copyright>
+    <PackageProjectUrl>https://russjudge.com</PackageProjectUrl>
+    <PackageIcon>rjicon2.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/russjudge/RussJudge.WPFControlsAndStylizer</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>WPF;Style;Button;Activity Indicator;Animated button</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,9 +25,24 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Resources\rjicon2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\window.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="rjicon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\rjicon2.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +58,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resources\rjicon2.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -2,18 +2,53 @@
     x:Class="Example.DialogWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:RussJudge.WPFValueConverters;assembly=RussJudge.WPFValueConverters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Example"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
-    Title="Dialog Window"
-    Width="800"
-    Height="450"
-    stylizer:Attached.TitleContent="Test"
-    stylizer:Attached.IsStylized="True"
+    Title="Dialog Window Style"
+    Width="350"
+    Height="200"
     Icon="/Resources/rjicon2.png"
     Style="{StaticResource DialogWindowStyle}"
     mc:Ignorable="d">
-    <Window.Resources />
-    <Grid />
+    <Window.Resources>
+        <converters:OppositeBoolConverter x:Key="OppositeBoolConverter" />
+    </Window.Resources>
+    <!--  If Attached.TitleContent is set, Attached.IsStylized property is optional, but must be set last.  -->
+    <stylizer:Attached.TitleContent>
+        <StackPanel Orientation="Horizontal">
+            <Button
+                Click="OnShowActivity"
+                Content="Toggle Activity"
+                IsHitTestVisible="True"
+                Style="{StaticResource TitleBarButtonStyle}" />
+            <stylizer:ActivityIndicator />
+        </StackPanel>
+    </stylizer:Attached.TitleContent>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
+        </Grid.RowDefinitions>
+        <TextBlock DockPanel.Dock="Top" Text="This window demonstrates use of the DialogWindowStyle" />
+        <Button
+            Style="{StaticResource ImportantButton}"
+            Grid.Row="1"
+            Click="OnClose"
+            DockPanel.Dock="Top"
+            IsEnabled="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive, Converter={StaticResource OppositeBoolConverter}}">
+            <StackPanel>
+                <Image Height="50" Source="/Resources/rjicon2.png" />
+                <TextBlock  Text="Click to close" />
+                <stylizer:ActivityIndicator
+                    EllipseBackground="BlueViolet"
+                    Color1="AliceBlue"
+                    Color2="Green"
+                    HorizontalAlignment="Center" Height="48" Width="32" />
+            </StackPanel>
+        </Button>
+
+    </Grid>
 </Window>

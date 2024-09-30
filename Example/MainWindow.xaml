@@ -6,16 +6,10 @@
     xmlns:local="clr-namespace:Example"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
-    Title="Main Window Example (Style=DialogWindowStyle)"
+    Title="Main Window Example (Style=Default Style)"
     Width="800"
-    Height="450" 
-    
+    SizeToContent="Height"
     d:DataContext="{x:Type local:MainWindow}"
-
-        stylizer:Attached.TitleContent="Test"
-        stylizer:Attached.IsStylized="True"
-    Style="{StaticResource StandardWindowStyle}"
-
     mc:Ignorable="d" Icon="/Resources/rjicon2.png">
     <!--
         
@@ -26,6 +20,7 @@
                 Foreground="{StaticResource PrimaryTextBrush}"
                 Content="Set Activity as &quot;Active&quot;" IsChecked="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive}" />
             <Border
+                ToolTip="Inside this box is an ActivityIndicator that performs animation when its IsActive property is set to True."
                 Width="75"
                 Height="75"
                 Padding="5,5,5,5"
@@ -33,7 +28,7 @@
                 VerticalAlignment="Center"
                 BorderBrush="Blue"
                 BorderThickness="2,2,2,2">
-                <stylizer:ActivityIndicator  />
+                <stylizer:ActivityIndicator   />
             </Border>
         </StackPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
@@ -41,20 +36,19 @@
             <Button Click="OnChangeStyleToStandardWindowStyle" Content="Change Window Style to StandardWindowStyle" />
         </StackPanel>
         <DockPanel  DockPanel.Dock="Top">
-            <Label Content="Watermarked Text box:" />
+            <Label Content="Placeholder Text box:" />
             <TextBox
-                stylizer:Attached.Placeholder="Watermark text."
-                
-                ToolTip="This is a test"
+                stylizer:Attached.Placeholder="This is a placeholder that you can put in a standard TextBox."
+                ToolTip="All that is needed is to apply an attached property: Attached.Placholder="
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
 
 
         </DockPanel>
         
         <DockPanel Margin="0,10,0,10" DockPanel.Dock="Top">
-            <Label Content="Unmodified Text box:" />
+            <Label Content="Unmodified Text box (no placeholder):" />
             <TextBox
-                ToolTip="This is a test"
+                ToolTip="This TextBox has no Placeholder"
                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
 
 
@@ -70,5 +64,6 @@
                 Style="{StaticResource ImportantButton}"
                 Click="OnOpenStandard" Content="Open Standard Window"></Button>
         </StackPanel>
+        <TextBlock Text="This example application demonstrates how to use the controls and styles offered in the RussJudge.WPFControlsAndStylizer library" TextWrapping="Wrap" />
     </DockPanel>
 </Window>

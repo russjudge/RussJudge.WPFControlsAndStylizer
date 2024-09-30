@@ -9,6 +9,11 @@ using System.Windows;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
+    /// <summary>
+    /// Note: This converter is available in the Nuget RussJudge.WPFValueConverters.
+    /// Included here so that this Library is not dependent on RussJudge.WPFValueConverters.
+    /// </summary>
+
     [ValueConversion(typeof(object), typeof(Visibility))]
     internal class NullToVisibilityConverter : IValueConverter
     {

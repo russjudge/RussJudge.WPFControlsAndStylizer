@@ -19,12 +19,7 @@ namespace RussJudge.WPFControlsAndStylizer
 
         public static readonly DependencyProperty IsActiveProperty =
            DependencyProperty.Register(nameof(IsActive), typeof(bool),
-           typeof(GlobalControl), new PropertyMetadata(false, OnChange));
-
-        private static void OnChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            
-        }
+           typeof(GlobalControl), new PropertyMetadata(false));
 
         public bool IsActive
         {

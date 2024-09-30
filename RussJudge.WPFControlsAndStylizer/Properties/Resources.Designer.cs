@@ -63,6 +63,16 @@ namespace RussJudge.WPFControlsAndStylizer.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] rjicon2 {
+            get {
+                object obj = ResourceManager.GetObject("rjicon2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] window {
             get {
                 object obj = ResourceManager.GetObject("window", resourceCulture);

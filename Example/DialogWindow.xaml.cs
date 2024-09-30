@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RussJudge.WPFControlsAndStylizer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,17 @@ namespace Example
         public DialogWindow()
         {
             InitializeComponent();
+            DataContext = this;
+        }
+
+        private void OnShowActivity(object sender, RoutedEventArgs e)
+        {
+            GlobalControl.Current.IsActive = !GlobalControl.Current.IsActive;
+        }
+
+        private void OnClose(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -9,6 +9,10 @@ using System.Windows;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
+    /// <summary>
+    /// Note: This converter is available in the Nuget RussJudge.WPFValueConverters.
+    /// Included here so that this Library is not dependent on RussJudge.WPFValueConverters.
+    /// </summary>
     internal class ValueMatchToVisibilityConverter : IValueConverter
     {
         public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)

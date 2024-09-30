@@ -26,22 +26,30 @@ namespace Example
 
         private void OnChangeStyleToDialogWindowStyle(object sender, RoutedEventArgs e)
         {
+            this.SizeToContent = SizeToContent.Manual;
             this.Style = (Style)Application.Current.Resources["DialogWindowStyle"];
             Title = "Main Window Example (Style=DialogWindowStyle)";
             Attached.SetIsStylized(this, true);
+            this.InvalidateMeasure();
+            this.UpdateLayout();
+            this.SizeToContent = SizeToContent.Height;
+            
         }
 
         private void OnChangeStyleToStandardWindowStyle(object sender, RoutedEventArgs e)
         {
+            this.SizeToContent = SizeToContent.Manual;
             this.Style = (Style)Application.Current.Resources["StandardWindowStyle"];
             Title = "Main Window Example (Style=StandardWindowStyle)";
             Attached.SetIsStylized(this, true);
+            this.InvalidateMeasure();
+            this.UpdateLayout();
+            this.SizeToContent = SizeToContent.Height;
         }
 
         private void OnOpenDialog(object sender, RoutedEventArgs e)
         {
-            DialogWindow win = new();
-            win.ShowDialog();
+            (new DialogWindow()).ShowDialog();
         }
 
         private void OnOpenStandard(object sender, RoutedEventArgs e)

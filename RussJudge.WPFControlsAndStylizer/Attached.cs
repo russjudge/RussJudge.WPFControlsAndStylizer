@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
@@ -59,7 +61,15 @@ namespace RussJudge.WPFControlsAndStylizer
             typeof(object),
             typeof(Attached),
             new FrameworkPropertyMetadata(defaultValue: null,
-                flags: FrameworkPropertyMetadataOptions.AffectsRender));
+                flags: FrameworkPropertyMetadataOptions.AffectsRender, OnTitleContentChanged));
+
+        private static void OnTitleContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is Window window && !GetIsStylizedApplied(window))
+            {
+                SetIsStylized(window, true);
+            }
+        }
 
         public static object? GetTitleContent(UIElement target) =>
             (object?)target.GetValue(TitleContentProperty);
@@ -88,11 +98,11 @@ namespace RussJudge.WPFControlsAndStylizer
                 flags: FrameworkPropertyMetadataOptions.AffectsRender,
                 propertyChangedCallback: OnIsStylizedChanged));
 
-
+        
 
         private static void OnIsStylizedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is Window element && !GetIsStylizedApplied(element) )
+            if (d is Window element && !GetIsStylizedApplied(element))
             {
                 var titleContent = GetTitleContent(element);
                 var isStylized = GetIsStylized(element);
@@ -188,11 +198,11 @@ namespace RussJudge.WPFControlsAndStylizer
         public static void SetIsStylized(UIElement target, bool value) =>
             target.SetValue(IsStylizedProperty, value);
 
-        public static bool GetIsStylizedApplied(UIElement target) =>
+        private static bool GetIsStylizedApplied(UIElement target) =>
             (bool)target.GetValue(IsStylizedAppliedProperty);
 
         // Declare a set accessor method.
-        public static void SetIsStylizedApplied(UIElement target, bool value) =>
+        private static void SetIsStylizedApplied(UIElement target, bool value) =>
             target.SetValue(IsStylizedAppliedProperty, value);
     }
 }
