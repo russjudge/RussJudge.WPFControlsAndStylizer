@@ -18,7 +18,7 @@
     <Color x:Key="PrimaryTextColor">Black</Color>
     <Color x:Key="PrimaryInverseTextColor">White</Color>
 
-    
+
     <Color x:Key="HighlightColor">#FFFFEEEE</Color>
     <Color x:Key="BorderHighlightColor">LightSalmon</Color>
 
@@ -240,7 +240,7 @@
                                     x:Name="PART_CustomTitleContent"
                                     Margin="5,0,5,0"
                                     VerticalAlignment="Center"
-                                    Content="{Binding Path=(local:Attached.TitleContent), Mode=OneWay}"
+                                    Content="{Binding Path=(local:Attached.TitleContent), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     DockPanel.Dock="Left"
                                     FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
                                     Foreground="{DynamicResource PrimaryInverseTextBrush}" />
@@ -370,7 +370,7 @@
                                     x:Name="PART_CustomTitleContent"
                                     Margin="5,0,5,0"
                                     VerticalAlignment="Center"
-                                    Content="{Binding Path=(local:Attached.TitleContent), Mode=OneWay}"
+                                    Content="{Binding Path=(local:Attached.TitleContent), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
                                     DockPanel.Dock="Left"
                                     FontSize="{DynamicResource {x:Static SystemFonts.CaptionFontSizeKey}}"
                                     Foreground="{DynamicResource PrimaryInverseTextBrush}" />

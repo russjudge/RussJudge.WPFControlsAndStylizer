@@ -11,7 +11,7 @@
     Width="350"
     Height="200"
     Icon="/Resources/rjicon2.png"
-    Style="{StaticResource DialogWindowStyle}"
+    Style="{StaticResource StandardWindowStyle}"
     Title="Standard Window Style">
     <Window.Resources>
         <converters:OppositeBoolConverter x:Key="OppositeBoolConverter" />
