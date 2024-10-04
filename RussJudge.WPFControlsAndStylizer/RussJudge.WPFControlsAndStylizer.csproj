@@ -21,7 +21,7 @@
     <VersionPrefix>1.0.2</VersionPrefix>
     <AssemblyVersion>1.0.2</AssemblyVersion>
     <FileVersion>1.0.2</FileVersion>
-    <PackageReleaseNotes>Fixed formatting issue on readme, and added "Placeholder" tag.</PackageReleaseNotes>
+    <PackageReleaseNotes>Corrected issue with attached property TitleContent.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
