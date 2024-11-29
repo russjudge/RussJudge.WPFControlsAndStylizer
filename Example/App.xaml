@@ -2,12 +2,13 @@
     x:Class="Example.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:Example"
     xmlns:Stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
-    StartupUri="MainWindow.xaml" ShutdownMode="OnLastWindowClose">
-    <Application.Resources >
+    xmlns:local="clr-namespace:Example"
+    ShutdownMode="OnLastWindowClose"
+    StartupUri="MainWindow.xaml">
+    <Application.Resources>
         <ResourceDictionary>
-            <!-- Overridding the Stylized Brushes of StylizerDictionary -->
+            <!--  Overridding the Stylized Brushes of StylizerDictionary  -->
             <Color x:Key="AttentionColor">LightCoral</Color>
             <Color x:Key="PrimaryTextColor">Black</Color>
             <Color x:Key="PrimaryInverseTextColor">White</Color>
@@ -21,14 +22,14 @@
             <Color x:Key="SecondaryBorderColor">Red</Color>
             <Color x:Key="BorderHighlightColor">LightSalmon</Color>
 
-            <!-- end Stylized Brushes override -->
-            
-            
+            <!--  end Stylized Brushes override  -->
+
+
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/RussJudge.WPFControlsAndStylizer;component/StylizerDictionary.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/RussJudge.WPFControlsAndStylizer;component/StylizerDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            
+
         </ResourceDictionary>
-        
+
     </Application.Resources>
 </Application>
