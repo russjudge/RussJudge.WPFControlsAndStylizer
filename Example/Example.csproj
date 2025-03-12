@@ -6,6 +6,14 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
+    <Title>Example</Title>
+    <Description>Sample project for utilizing the features of the RussJudge.WPFControlsAndStylizer Nuget.</Description>
+    <Copyright>Copyright (c) 2023, 2025 Russ Judge</Copyright>
+    <AssemblyVersion>1.0.1</AssemblyVersion>
+    <FileVersion>1.0.1</FileVersion>
+    <Company></Company>
+    <Authors>Russ Judge</Authors>
+    <PackageProjectUrl>https://github.com/russjudge/RussJudge.WPFControlsAndStylizer</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -34,19 +34,21 @@
         </Grid.RowDefinitions>
         <TextBlock DockPanel.Dock="Top" Text="This window demonstrates use of the DialogWindowStyle" />
         <Button
-            Style="{StaticResource ImportantButton}"
             Grid.Row="1"
             Click="OnClose"
             DockPanel.Dock="Top"
-            IsEnabled="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive, Converter={StaticResource OppositeBoolConverter}}">
+            IsEnabled="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive, Converter={StaticResource OppositeBoolConverter}}"
+            Style="{StaticResource ImportantButton}">
             <StackPanel>
                 <Image Height="50" Source="/Resources/rjicon2.png" />
-                <TextBlock  Text="Click to close" />
+                <TextBlock Text="Click to close" />
                 <stylizer:ActivityIndicator
-                    EllipseBackground="BlueViolet"
+                    Width="32"
+                    Height="48"
+                    HorizontalAlignment="Center"
                     Color1="AliceBlue"
                     Color2="Green"
-                    HorizontalAlignment="Center" Height="48" Width="32" />
+                    EllipseBackground="BlueViolet" />
             </StackPanel>
         </Button>
 

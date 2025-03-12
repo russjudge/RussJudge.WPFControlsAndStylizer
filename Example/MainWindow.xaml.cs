@@ -21,7 +21,7 @@ namespace Example
         {
             InitializeComponent();
             DataContext = this;
-            
+
         }
 
         private void OnChangeStyleToDialogWindowStyle(object sender, RoutedEventArgs e)
@@ -33,7 +33,7 @@ namespace Example
             this.InvalidateMeasure();
             this.UpdateLayout();
             this.SizeToContent = SizeToContent.Height;
-            
+
         }
 
         private void OnChangeStyleToStandardWindowStyle(object sender, RoutedEventArgs e)
@@ -55,6 +55,16 @@ namespace Example
         private void OnOpenStandard(object sender, RoutedEventArgs e)
         {
             (new StandardWindow()).Show();
+        }
+
+        private void OnOpenStandardNoTitleContent(object sender, RoutedEventArgs e)
+        {
+            (new StandardWindowNoTitleContent()).Show();
+        }
+
+        private void OnAbout(object sender, RoutedEventArgs e)
+        {
+            About.DisplayAbout();
         }
     }
 }

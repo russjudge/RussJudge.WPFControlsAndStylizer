@@ -30,6 +30,7 @@
                 BorderThickness="2,2,2,2">
                 <stylizer:ActivityIndicator />
             </Border>
+            <Button Padding="5,5,5,5" Content="Show About" Click="OnAbout" />
         </StackPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button Click="OnChangeStyleToDialogWindowStyle" Content="Change Window Style to DialogWindowStyle" />
@@ -63,6 +64,10 @@
                 HorizontalAlignment="Left"
                 Style="{StaticResource ImportantButton}"
                 Click="OnOpenStandard" Content="Open Standard Window"></Button>
+            <Button
+                HorizontalAlignment="Left"
+                Style="{StaticResource ImportantButton}"
+                Click="OnOpenStandardNoTitleContent" Content="Open Standard Window without Title Content"></Button>
         </StackPanel>
         <TextBlock Text="This example application demonstrates how to use the controls and styles offered in the RussJudge.WPFControlsAndStylizer library" TextWrapping="Wrap" />
     </DockPanel>

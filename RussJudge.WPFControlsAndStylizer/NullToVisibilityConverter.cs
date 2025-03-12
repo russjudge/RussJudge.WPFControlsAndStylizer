@@ -65,7 +65,7 @@ namespace RussJudge.WPFControlsAndStylizer
             {
                 var parms = parm.Split('|');
                 var visibilityOptions = ParmsToVisibility(0, parms);
-                var retVal = (value == null || (value is string val && string.IsNullOrEmpty(val))) ? visibilityOptions.Item1 : visibilityOptions.Item2;
+                var retVal = (value == null || (value is string val && string.IsNullOrEmpty(val.Trim()))) ? visibilityOptions.Item1 : visibilityOptions.Item2;
                 return (retVal == null) ? DependencyProperty.UnsetValue : retVal;
             }
 

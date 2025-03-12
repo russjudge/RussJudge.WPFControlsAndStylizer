@@ -81,6 +81,15 @@ There are three color properties that can be stylized:
 By default, the ActivityIndicator is a circle.  However, by setting the Height and Width differently, an elllipse is formed that will create a differently
 behaving activity indicator.
 
+### About
+This is a standard "About" window, stylized with the "DialogWindowStyle" that displays properties from any given Assembly.  The default
+Assembly is the Entry Assembly.  
+Open the About window with:
+
+
+`var optionalAssembly = System.Reflection.EntryAssembly;`
+
+`About.DisplayAbout("optional informational string", optionalAssembly);`
 
 ## Attached Properties
 
