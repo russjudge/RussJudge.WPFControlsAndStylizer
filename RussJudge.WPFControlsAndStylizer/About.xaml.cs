@@ -216,6 +216,11 @@ namespace RussJudge.WPFControlsAndStylizer
                 this.SetValue(NameVersionProperty, value);
             }
         }
+        /// <summary>
+        /// Displays the About window.
+        /// </summary>
+        /// <param name="otherDescriptiveInfo">Any descriptive information to display in addition to standard information from the assembly.</param>
+        /// <param name="assembly">The Assembly from which to get information.  Default is the Entry Assembly.</param>
         public static void DisplayAbout(string otherDescriptiveInfo = "", Assembly? assembly = null)
         {
             Assembly? assm = null;

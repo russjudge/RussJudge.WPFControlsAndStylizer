@@ -30,7 +30,15 @@
                 BorderThickness="2,2,2,2">
                 <stylizer:ActivityIndicator />
             </Border>
-            <Button Padding="5,5,5,5" Content="Show About" Click="OnAbout" />
+            <Button 
+                Style="{StaticResource ImportantButton}"
+                VerticalAlignment="Center"
+                Padding="5,5,5,5" Content="Show About" Click="OnAbout" />
+            <Button 
+                Style="{StaticResource ImportantButton}"
+                VerticalAlignment="Center"
+                Padding="5,5,5,5" Content="Prompt for string" Click="OnPrompt" />
+
         </StackPanel>
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
             <Button Click="OnChangeStyleToDialogWindowStyle" Content="Change Window Style to DialogWindowStyle" />
@@ -57,14 +65,17 @@
 
         <StackPanel Orientation="Horizontal">
             <Button
+                VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Style="{StaticResource ImportantButton}"
                 Click="OnOpenDialog" Content="Open Dialog Window"></Button>
             <Button
+                VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Style="{StaticResource ImportantButton}"
                 Click="OnOpenStandard" Content="Open Standard Window"></Button>
             <Button
+                VerticalAlignment="Center"
                 HorizontalAlignment="Left"
                 Style="{StaticResource ImportantButton}"
                 Click="OnOpenStandardNoTitleContent" Content="Open Standard Window without Title Content"></Button>

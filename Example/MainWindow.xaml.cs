@@ -66,5 +66,18 @@ namespace Example
         {
             About.DisplayAbout();
         }
+
+        private void OnPrompt(object sender, RoutedEventArgs e)
+        {
+            var result = InputPromptDialog.ShowDialog("Enter some text:", "Testing InputPromptDialog", "A default text");
+            if (result == null)
+            {
+                MessageBox.Show("You canceled");
+            }
+            else
+            {
+                MessageBox.Show($"You entered: {result}");
+            }
+        }
     }
 }

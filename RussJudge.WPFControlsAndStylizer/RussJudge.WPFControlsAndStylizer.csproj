@@ -19,10 +19,10 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>WPF;Style;Button;Activity Indicator;Animated button;Placeholder</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <VersionPrefix>1.0.3</VersionPrefix>
-    <AssemblyVersion>1.0.3</AssemblyVersion>
-    <FileVersion>1.0.3</FileVersion>
-    <PackageReleaseNotes>Added a standardized "About" window that extracts information from a given Assembly.</PackageReleaseNotes>
+    <VersionPrefix>1.0.4</VersionPrefix>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <FileVersion>1.0.4</FileVersion>
+    <PackageReleaseNotes>Added InputPromptDialog.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

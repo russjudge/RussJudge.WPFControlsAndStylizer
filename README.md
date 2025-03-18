@@ -86,10 +86,27 @@ This is a standard "About" window, stylized with the "DialogWindowStyle" that di
 Assembly is the Entry Assembly.  
 Open the About window with:
 
+```
+var optionalAssembly = System.Reflection.EntryAssembly;`
 
-`var optionalAssembly = System.Reflection.EntryAssembly;`
+About.DisplayAbout("optional informational string", optionalAssembly);`
+```
 
-`About.DisplayAbout("optional informational string", optionalAssembly);`
+### InputPromptDialog
+This is a simplified dialog window for providing a prompt to accept a string from the user.
+```
+string? result = InputPromptDialog.ShowDialog();
+if (result == null)
+{
+	//User selected "Cancel"
+}
+else
+{
+	//User entered a string for processing.
+	string value = result;
+}
+```
+
 
 ## Attached Properties
 
