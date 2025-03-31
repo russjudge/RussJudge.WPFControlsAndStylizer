@@ -9,8 +9,9 @@
     mc:Ignorable="d"
     xmlns:stylizer="clr-namespace:RussJudge.WPFControlsAndStylizer;assembly=RussJudge.WPFControlsAndStylizer"
     Width="350"
-    Height="200"
+    Height="400"
     Icon="/Resources/rjicon2.png"
+    Closed="OnClosed"
     Style="{StaticResource StandardWindowStyle}"
     Title="Standard Window Style">
     <Window.Resources>
@@ -27,25 +28,69 @@
             <stylizer:ActivityIndicator />
         </StackPanel>
     </stylizer:Attached.TitleContent>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="4*" />
-        </Grid.RowDefinitions>
-        <TextBlock DockPanel.Dock="Top" Text="This window demonstrates use of the DialogWindowStyle" />
-        <Button
-            Style="{StaticResource ImportantButton}"
-            Grid.Row="1"
-            Click="OnClose"
-            DockPanel.Dock="Top"
-            IsEnabled="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive, Converter={StaticResource OppositeBoolConverter}}">
-            <StackPanel>
-                <Image Height="50" Source="/Resources/rjicon2.png" />
-                <TextBlock  Text="Click to close" />
-                <stylizer:ActivityIndicator
+    <DockPanel>
+
+        <Grid
+            DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="4*" />
+            </Grid.RowDefinitions>
+            <TextBlock DockPanel.Dock="Top" Text="This window demonstrates use of the StandardWindowStyle" />
+            <Button
+                Style="{StaticResource ImportantButton}"
+                Grid.Row="1"
+                Click="OnClose"
+                DockPanel.Dock="Top"
+                IsEnabled="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive, Converter={StaticResource OppositeBoolConverter}}">
+                <StackPanel>
+                    <Image Height="50" Source="/Resources/rjicon2.png" />
+                    <TextBlock  Text="Click to close" />
+                    <stylizer:ActivityIndicator
                     EllipseBackground="Aquamarine"
                     HorizontalAlignment="Center" Height="48" Width="64" />
-            </StackPanel>
-        </Button>
+                </StackPanel>
+            </Button>
 
-    </Grid></Window>
+        </Grid>
+        <DockPanel
+            DockPanel.Dock="Bottom">
+
+            <Button
+                HorizontalAlignment="Left"
+                Click="OnAddProcess"
+                Style="{StaticResource ImportantButton}"
+                DockPanel.Dock="Top"
+                IsEnabled="{Binding Source={x:Static stylizer:GlobalControl.Current}, Path=IsActive, Converter={StaticResource OppositeBoolConverter}}">
+                <StackPanel>
+                    <TextBlock Text="Add Processes for Monitoring" />
+                    <stylizer:ActivityIndicator
+                        HorizontalAlignment="Center" Height="48" Width="64" />
+                </StackPanel>
+            </Button>
+
+            <ListBox
+                ItemsSource="{Binding Source={x:Static stylizer:TaskMonitor.Current}, Path=BackgroundProcesses}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Click="OnCancelProcess" CommandParameter="{Binding}">
+                                <Button.Content>
+                                    <TextBlock Text="X" FontWeight="Bold" />
+                                </Button.Content>
+                                <Button.ToolTip>
+                                    <TextBlock Text="Cancel Process" />
+                                </Button.ToolTip>
+                            </Button>
+                            <TextBlock Text="{Binding Description}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+            </ListBox>
+
+        </DockPanel>
+
+    </DockPanel>
+
+</Window>

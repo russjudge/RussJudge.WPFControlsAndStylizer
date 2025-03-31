@@ -107,6 +107,14 @@ else
 }
 ```
 
+### TaskMonitor
+This Singleton provides a mechanism for starting and monitoring background tasks, with the capability to cancel.
+
+Tasks can be added by calling the AddTask method.  The first parameter is a delegate that must accept a CancellationToken as its
+only parameter.  This token can be ignored within the delegate, but can be used to allow controlled cancellation of the Task.
+The second parameter of AddTask is a simple description. 
+
+TaskMontior.Current.BackgroundProcesses is a bindable collection of running tasks.
 
 ## Attached Properties
 

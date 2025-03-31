@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Drawing;
+using System.Reflection;
 using System.Windows;
 
 
@@ -11,7 +12,6 @@ namespace RussJudge.WPFControlsAndStylizer
     {
         private About(Assembly assembly)
         {
-
             var nm = assembly.GetName();
 
             var vers = nm.Version;

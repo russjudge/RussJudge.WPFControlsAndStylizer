@@ -527,12 +527,17 @@
                 </TransformGroup>
             </Setter.Value>
         </Setter>
-        <Setter Property="BitmapEffect">
+
+        <Setter Property="Effect">
             <Setter.Value>
-                <BevelBitmapEffect />
+                <DropShadowEffect
+                    BlurRadius="5"
+                    Direction="315"
+                    Opacity="0.5"
+                    ShadowDepth="4"
+                    Color="Gray" />
             </Setter.Value>
         </Setter>
-
     </Style>
 
 
@@ -594,9 +599,9 @@
                             <Setter TargetName="PART_OuterRectangle" Property="Rectangle.Stroke" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
 
                             <Setter TargetName="PART_GlassOverlay" Property="Rectangle.Opacity" Value="1" />
-                            <Setter TargetName="PART_ContentPresenter" Property="ContentPresenter.BitmapEffect">
+                            <Setter TargetName="PART_ContentPresenter" Property="Effect">
                                 <Setter.Value>
-                                    <BlurBitmapEffect Radius="1" />
+                                    <BlurEffect Radius="1" />
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
