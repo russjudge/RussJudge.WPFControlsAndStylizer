@@ -19,10 +19,10 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>WPF;Style;Button;Activity Indicator;Animated button;Placeholder</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <VersionPrefix>1.1.0</VersionPrefix>
-    <AssemblyVersion>1.1.0</AssemblyVersion>
-    <FileVersion>1.1.0</FileVersion>
-    <PackageReleaseNotes>Added TaskMonitor for monitoring background processes.</PackageReleaseNotes>
+    <VersionPrefix>1.1.1</VersionPrefix>
+    <AssemblyVersion>1.1.1</AssemblyVersion>
+    <FileVersion>1.1.1</FileVersion>
+    <PackageReleaseNotes>Fixed an issue with Maximize for windows with the StandardWindow style. Before this fix, maximizing a window styled with StandardWindow would overlay the Taskbar, which is undesireable. There are severe issues with Microsoft's WindowChrome class, which the StandardWindow style utilizes.  Had to add a work-around to solve the problem by first removing the style before maximizing, the re-applying the style..</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
@@ -48,6 +48,9 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
 
   <ItemGroup>

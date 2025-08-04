@@ -44,41 +44,20 @@ namespace RussJudge.WPFControlsAndStylizer
         }
         public static bool OperatorTest(object val, string operatorValue, string compareValue)
         {
-            bool retVal;
-
             string? value = val?.ToString();
 
-            if (value == null)
+            value ??= string.Empty;
+
+            var retVal = operatorValue switch
             {
-                value = string.Empty;
-            }
-            switch (operatorValue)
-            {
-                case "<":
-                case "&lt;":
-                    retVal = value.CompareTo(compareValue) < 0;
-                    break;
-                case "<=":
-                case "&lt;=":
-                    retVal = value.CompareTo(compareValue) <= 0;
-                    break;
-                case ">":
-                case "&gt;":
-                    retVal = value.CompareTo(compareValue) > 0;
-                    break;
-                case ">=":
-                case "&gt;=":
-                    retVal = value.CompareTo(compareValue) >= 0;
-                    break;
-                case "=":
-                    retVal = value.Equals(compareValue);
-                    break;
-                case "!=":
-                    retVal = !value.Equals(compareValue);
-                    break;
-                default:
-                    throw new NotSupportedException("Specified Operator is not supported.");
-            }
+                "<" or "&lt;" => value.CompareTo(compareValue) < 0,
+                "<=" or "&lt;=" => value.CompareTo(compareValue) <= 0,
+                ">" or "&gt;" => value.CompareTo(compareValue) > 0,
+                ">=" or "&gt;=" => value.CompareTo(compareValue) >= 0,
+                "=" => value.Equals(compareValue),
+                "!=" => !value.Equals(compareValue),
+                _ => throw new NotSupportedException("Specified Operator is not supported."),
+            };
             return retVal;
         }
     }

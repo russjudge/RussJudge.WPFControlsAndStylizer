@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Shell;
 using System.Xml.Linq;
 
 namespace RussJudge.WPFControlsAndStylizer
@@ -34,7 +35,7 @@ namespace RussJudge.WPFControlsAndStylizer
                 {
                     Source = new Uri("pack://application:,,,/RussJudge.WPFControlsAndStylizer;component/StylizerDictionary.xaml", UriKind.Absolute)
                 };
-                
+
                 // Retrieve the ControlTemplate by key
                 ControlTemplate template = (ControlTemplate)resourceDictionary["PlaceholderTextBoxTemplate"];
 
@@ -98,7 +99,7 @@ namespace RussJudge.WPFControlsAndStylizer
                 flags: FrameworkPropertyMetadataOptions.AffectsRender,
                 propertyChangedCallback: OnIsStylizedChanged));
 
-        
+
 
         private static void OnIsStylizedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -122,16 +123,7 @@ namespace RussJudge.WPFControlsAndStylizer
                     win.Close();
                 }));
 
-            win.CommandBindings.Add(
-                new CommandBinding(SystemCommands.MaximizeWindowCommand,
-                    (object sender, ExecutedRoutedEventArgs e) =>
-                    {
-                        SystemCommands.MaximizeWindow(win);
-                    }, (object sender, CanExecuteRoutedEventArgs e) =>
-                    {
-                        e.CanExecute = win.ResizeMode == ResizeMode.CanResize || win.ResizeMode == ResizeMode.CanResizeWithGrip;
-                    })
-                );
+
 
             win.CommandBindings.Add(
                 new CommandBinding(SystemCommands.MinimizeWindowCommand,
@@ -150,17 +142,13 @@ namespace RussJudge.WPFControlsAndStylizer
                     (object sender, ExecutedRoutedEventArgs e) =>
                     {
                         SystemCommands.RestoreWindow(win);
+                        win.MaxWidth = double.PositiveInfinity;
+                        win.MaxHeight = double.PositiveInfinity;
                     }, (object sender, CanExecuteRoutedEventArgs e) =>
                     {
                         e.CanExecute = win.ResizeMode == ResizeMode.CanResize || win.ResizeMode == ResizeMode.CanResizeWithGrip;
                     })
                 );
-
-
-
-            win.StateChanged += Win_StateChanged;
-
-
 
             win.CommandBindings.Add(
                 new CommandBinding(SystemCommands.ShowSystemMenuCommand,
@@ -176,21 +164,37 @@ namespace RussJudge.WPFControlsAndStylizer
 
                     })
                 );
-        }
-        static bool fixingMax = false;
-        private static void Win_StateChanged(object? sender, EventArgs e)
-        {
-            if (sender is Window win)
-            {
-                if (!fixingMax && win.WindowState == WindowState.Maximized)
+            win.CommandBindings.Add(
+                new CommandBinding(SystemCommands.MaximizeWindowCommand,
+                (object sender, ExecutedRoutedEventArgs e) =>
                 {
-                    fixingMax = true;
-                    win.WindowState = WindowState.Normal;
-                    win.WindowState = WindowState.Maximized;
-                    fixingMax = false;
-                }
-            }
+                    // Temporarily remove the style to avoid issues with maximization
+                    // Microsoft is apparently incompetent when it comes to the WindowChrome class.
+                    //  These problems with WindowChrome has existed for years and it looks like there is no hope in
+                    //   Microsoft fixing it.
+
+                    var style = win.Style;
+                    win.Style = null; // Remove the style temporarily to avoid issues with maximization  This will use the standard
+                                      // Window mechanism for maximization, which is reliable.
+                    SystemCommands.MaximizeWindow(win);
+
+                    Task.Delay(100).ContinueWith((xx) =>
+                        {
+
+                            win.Dispatcher.Invoke(() =>
+                            {
+                                win.Style = style; // Restore the style after maximization
+                            });
+                        });
+
+                }, (object sender, CanExecuteRoutedEventArgs e) =>
+                {
+                    e.CanExecute = win.ResizeMode == ResizeMode.CanResize || win.ResizeMode == ResizeMode.CanResizeWithGrip;
+                })
+                );
         }
+
+
         public static bool GetIsStylized(UIElement target) =>
             (bool)target.GetValue(IsStylizedProperty);
 
