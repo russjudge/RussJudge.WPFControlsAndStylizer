@@ -62,10 +62,11 @@ namespace Example
         {
             if (sender is Button btn && btn.CommandParameter is NamedTaskItem taskItem)
             {
-                taskItem.CancelTokenSource.Cancel();
+                // TaskMonitor.Cancel does nothing when the task has already finished.
+                TaskMonitor.Cancel(taskItem);
 
-                //Or:
-                //TaskMonitor.Cancel(taskItem);
+                //Or, when the task is known to be still running:
+                //taskItem.CancelTokenSource.Cancel();
             }
         }
 

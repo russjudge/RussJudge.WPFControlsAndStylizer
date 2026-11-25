@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
@@ -17,18 +13,15 @@ namespace RussJudge.WPFControlsAndStylizer
     [ValueConversion(typeof(object), typeof(Visibility))]
     internal class NullToVisibilityConverter : IValueConverter
     {
+        // A converter parameter is a constant in XAML, so each distinct parameter is parsed once and then reused
+        // instead of being split and parsed again on every conversion (for a TextBox, that is every keystroke).
+        private static readonly ConcurrentDictionary<string, VisibilityPair> ParsedParameters = new();
+
         public static Visibility? StringToVisibility(string value)
         {
-
-            if (Enum.TryParse(typeof(Visibility), value, out object? v))
-            {
-                return (Visibility)v;
-            }
-            else
-            {
-                return null;
-            }
+            return Enum.TryParse(value, out Visibility visibility) ? visibility : null;
         }
+
         public static Tuple<Visibility?, Visibility?> ParmsToVisibility(int startIndex, params string[] values)
         {
             Visibility? item1 = Visibility.Visible;
@@ -59,22 +52,33 @@ namespace RussJudge.WPFControlsAndStylizer
             }
             return new Tuple<Visibility?, Visibility?>(item1, item2);
         }
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (parameter is string parm)
             {
-                var parms = parm.Split('|');
-                var visibilityOptions = ParmsToVisibility(0, parms);
-                var retVal = (value == null || (value is string val && string.IsNullOrEmpty(val.Trim()))) ? visibilityOptions.Item1 : visibilityOptions.Item2;
-                return (retVal == null) ? DependencyProperty.UnsetValue : retVal;
+                VisibilityPair options = ParsedParameters.GetOrAdd(parm, p => new VisibilityPair(ParmsToVisibility(0, p.Split('|'))));
+                return (value == null || (value is string val && string.IsNullOrWhiteSpace(val))) ? options.First : options.Second;
             }
 
             return DependencyProperty.UnsetValue;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
+    }
+
+    /// <summary>
+    /// The two outcomes of a visibility converter, already boxed so that a conversion does not allocate.
+    /// An outcome that could not be parsed is <see cref="DependencyProperty.UnsetValue"/>.
+    /// </summary>
+    internal sealed class VisibilityPair(Tuple<Visibility?, Visibility?> options)
+    {
+        public object First { get; } = Box(options.Item1);
+        public object Second { get; } = Box(options.Item2);
+
+        private static object Box(Visibility? visibility) => visibility ?? DependencyProperty.UnsetValue;
     }
 }

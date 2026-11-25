@@ -34,10 +34,11 @@
 
             </Button>
         </StackPanel>
+        <!--  PropertyChanged: the value is read as soon as the dialog closes, which may be before the TextBox loses the focus.  -->
         <TextBox
-            
+            x:Name="ValueTextBox"
             DockPanel.Dock="Top"
-            Text="{Binding Path=Value}" />
+            Text="{Binding Path=Value, UpdateSourceTrigger=PropertyChanged}" />
 
     </DockPanel>
 </Window>

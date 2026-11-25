@@ -1,38 +1,87 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
     /// <summary>
-    /// Interaction logic for ActivityIndicator.xaml
+    /// A spinner that indicates activity while <see cref="IsActive"/> is true.
     /// </summary>
     public partial class ActivityIndicator : UserControl
     {
+        // The animations never change, so every indicator shares the same two frozen instances.
+        private static readonly DoubleAnimation ClockwiseSpin = CreateSpin(0, 360, 1000);
+        private static readonly DoubleAnimation CounterClockwiseSpin = CreateSpin(360, 0, 800);
+
+        // The shapes are created once and then only updated.
+        private readonly RotateTransform _rotateTransform = new();
+        private readonly RotateTransform _rotateTransform2 = new();
+        private readonly Ellipse _ellipse = new() { Opacity = 0.5 };
+        private readonly Path _arc = CreateArc(0.75);
+        private readonly Path _arc2 = CreateArc(1);
+        private bool _isSpinning;
+
         public ActivityIndicator()
         {
-
             InitializeComponent();
+
+            _ellipse.Stroke = EllipseBackground;
+            _arc.Stroke = Color1;
+            _arc.RenderTransform = _rotateTransform;
+            _arc2.Stroke = Color2;
+            _arc2.RenderTransform = _rotateTransform2;
+
+            MyContent.Children.Add(_ellipse);
+            MyContent.Children.Add(_arc);
+            MyContent.Children.Add(_arc2);
+
+            IsVisibleChanged += OnIsVisibleChanged;
+            UpdateShapes();
+        }
+
+        private static DoubleAnimation CreateSpin(double from, double to, double milliseconds)
+        {
+            DoubleAnimation animation = new()
+            {
+                From = from,
+                To = to,
+                Duration = new Duration(TimeSpan.FromMilliseconds(milliseconds)),
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+            animation.Freeze();
+            return animation;
+        }
+
+        private static Path CreateArc(double opacity)
+        {
+            return new Path
+            {
+                Opacity = opacity,
+                StrokeEndLineCap = PenLineCap.Round,
+                StrokeStartLineCap = PenLineCap.Round
+            };
         }
 
         private static void OnBrushChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is ActivityIndicator me)
             {
-                me.RenderArc();
+                // Only the stroke of the affected shape changes; nothing has to be rebuilt.
+                Brush brush = (Brush)e.NewValue;
+                if (e.Property == EllipseBackgroundProperty)
+                {
+                    me._ellipse.Stroke = brush;
+                }
+                else if (e.Property == Color1Property)
+                {
+                    me._arc.Stroke = brush;
+                }
+                else if (e.Property == Color2Property)
+                {
+                    me._arc2.Stroke = brush;
+                }
             }
         }
 
@@ -40,6 +89,9 @@ namespace RussJudge.WPFControlsAndStylizer
             DependencyProperty.Register(nameof(EllipseBackground), typeof(Brush),
             typeof(ActivityIndicator), new PropertyMetadata(Brushes.Gray, OnBrushChanged));
 
+        /// <summary>
+        /// The brush of the ring behind the two spinning arcs.
+        /// </summary>
         public Brush EllipseBackground
         {
             get
@@ -57,6 +109,9 @@ namespace RussJudge.WPFControlsAndStylizer
             DependencyProperty.Register(nameof(Color1), typeof(Brush),
             typeof(ActivityIndicator), new PropertyMetadata(Brushes.Blue, OnBrushChanged));
 
+        /// <summary>
+        /// The brush of the arc that spins clockwise.
+        /// </summary>
         public Brush Color1
         {
             get
@@ -73,6 +128,9 @@ namespace RussJudge.WPFControlsAndStylizer
             DependencyProperty.Register(nameof(Color2), typeof(Brush),
             typeof(ActivityIndicator), new PropertyMetadata(Brushes.Plum, OnBrushChanged));
 
+        /// <summary>
+        /// The brush of the arc that spins counter-clockwise.
+        /// </summary>
         public Brush Color2
         {
             get
@@ -94,25 +152,14 @@ namespace RussJudge.WPFControlsAndStylizer
         {
             if (d is ActivityIndicator me)
             {
-                if (me.isRendered)
-                {
-
-                    if (me.IsActive)
-                    {
-                        me.StartArcAnimation();
-                    }
-                    else
-                    {
-                        me.StopArcAnimation();
-                    }
-                }
-                else
-                {
-                    me.RenderArc();
-                }
+                me.UpdateSpin();
             }
         }
-        bool isRendered = false;
+
+        /// <summary>
+        /// Whether the indicator is spinning.  The default style binds this to
+        /// <see cref="GlobalControl.IsActive"/> and shows the indicator only while it is true.
+        /// </summary>
         public bool IsActive
         {
             get
@@ -125,189 +172,96 @@ namespace RussJudge.WPFControlsAndStylizer
             }
         }
 
-
-        private RotateTransform? _rotateTransform;
-        private RotateTransform? _rotateTransform2;
-        private void RenderArc()
+        /// <summary>
+        /// Sizes and positions the ring and the two arcs for the current size of the control.
+        /// </summary>
+        private void UpdateShapes()
         {
-            if (MyContent == null)
+            double width = ActualWidth;
+            double height = ActualHeight;
+            if (width <= 0 || height <= 0)
             {
+                // Not laid out yet (or no room at all): there is nothing to draw.
+                MyContent.Visibility = Visibility.Collapsed;
                 return;
             }
-            double baseline = ActualWidth;
-            if (ActualHeight < baseline)
-            {
-                baseline = ActualHeight;// * 0.5;
-            }
-            if (baseline == 0)
-            {
+            MyContent.Visibility = Visibility.Visible;
 
-                baseline = 32;
-            }
+            double workItem = Math.Min(width, height) * 0.75;
+            double workWidth = width * 0.75;
+            double workHeight = height * 0.75;
 
-            double workItem = baseline * 0.75; // 0.9;// * 0.75; //* 1.5;
-
-            double workWidth = ActualWidth * 0.75;
-            double workHeight = ActualHeight * 0.75;
-
-
-            MyContent.Children.Clear();
-
-
-            double adjust = workItem * 0.1;  //top-left corner placement.
+            //top-left corner placement.
             double adjustWidth = workWidth * 0.1;
             double adjustHeight = workHeight * 0.1;
 
+            double strokeThickness = workItem * 0.2;
 
-            double strokethickness = workItem * 0.2;  //Stroke thinkness
-
-            double radius = (workItem * 0.9) / 2;
             double radiusWidth = (workWidth * 0.9) / 2;
             double radiusHeight = (workHeight * 0.9) / 2;
 
-            //Vector center = new(radius + adjust, radius + adjust);
-            Vector center = new(radiusWidth + adjustWidth, radiusHeight + adjustHeight);
-
-
-            const double start_angle = 0;
-            const double end_angle = Math.PI;
-
+            Point center = new(radiusWidth + adjustWidth, radiusHeight + adjustHeight);
 
             //Background circle.
-            Ellipse ellipse = new()
+            Canvas.SetLeft(_ellipse, adjustWidth);
+            Canvas.SetTop(_ellipse, adjustHeight);
+            _ellipse.Width = workWidth * 1.1;
+            _ellipse.Height = workHeight * 1.1;
+            _ellipse.StrokeThickness = strokeThickness;
+
+            // Both arcs are the lower half of the ring; each is rotated around the center of the ring.
+            // The arc starts and ends on the ring, so both ends use the horizontal radius.
+            StreamGeometry geometry = new();
+            using (StreamGeometryContext context = geometry.Open())
             {
-                Margin = new Thickness(adjustWidth, adjustHeight, 0, 0),
-                Width = workWidth * 1.1,
-                Height = workHeight * 1.1,
-                Opacity = 0.5,
-                Stroke = EllipseBackground,
-                StrokeThickness = strokethickness
-            };
-
-
-            MyContent.Children.Add(ellipse);
-
-
-
-            //First Arc
-            ArcSegment arcSegment = new()
-            {
-                IsLargeArc = false,
-                //Point = new Point(center.X + radius * Math.Cos(end_angle), center.Y + radius * Math.Sin(end_angle)),
-                Point = new Point(center.X + radiusWidth * Math.Cos(end_angle), center.Y + radiusHeight * Math.Sin(end_angle)),
-
-                Size = new Size(radiusWidth, radiusHeight),
-                SweepDirection = SweepDirection.Clockwise
-            };
-
-
-            PathFigure pathFigure = new()
-            {
-                //Set start of arc
-                StartPoint = new Point(center.X + radius * Math.Cos(start_angle), center.Y + radius * Math.Sin(start_angle))
-            };
-            pathFigure.Segments.Add(arcSegment);
-
-
-
-
-
-            PathGeometry pathGeometry = new();
-            pathGeometry.Figures.Add(pathFigure);
-
-
-
-            _rotateTransform = new(0, center.X, center.Y);
-
-            var arc_path = new Path
-            {
-                Opacity = 0.75,
-                Stroke = Color1,
-                StrokeThickness = strokethickness,
-                StrokeEndLineCap = PenLineCap.Round,
-                StrokeStartLineCap = PenLineCap.Round,
-                Data = pathGeometry,
-                RenderTransform = _rotateTransform
-            };
-
-            Canvas.SetLeft(arc_path, adjustWidth);
-            Canvas.SetTop(arc_path, adjustHeight);
-
-
-
-            MyContent.Children.Add(arc_path);
-
-            _rotateTransform2 = new(0, center.X, center.Y);
-            arc_path = new Path
-            {
-                Opacity = 1,
-                Stroke = Color2,
-                StrokeThickness = strokethickness,
-                StrokeEndLineCap = PenLineCap.Round,
-                StrokeStartLineCap = PenLineCap.Round,
-                Data = pathGeometry,
-                RenderTransform = _rotateTransform2
-            };
-
-            Canvas.SetLeft(arc_path, adjustWidth);
-            Canvas.SetTop(arc_path, adjustHeight);
-
-
-            MyContent.Children.Add(arc_path);
-            if (IsActive)
-            {
-                //Visibility = Visibility.Visible;
-                StartArcAnimation();
+                context.BeginFigure(new Point(center.X + radiusWidth, center.Y), isFilled: false, isClosed: false);
+                context.ArcTo(new Point(center.X - radiusWidth, center.Y), new Size(radiusWidth, radiusHeight),
+                    rotationAngle: 0, isLargeArc: false, SweepDirection.Clockwise, isStroked: true, isSmoothJoin: false);
             }
-            else
-            {
-                StopArcAnimation();
-                // Visibility= Visibility.Collapsed;   
-            }
-            isRendered = true;
+            geometry.Freeze();
+
+            UpdateArc(_arc, _rotateTransform, geometry, center, strokeThickness, adjustWidth, adjustHeight);
+            UpdateArc(_arc2, _rotateTransform2, geometry, center, strokeThickness, adjustWidth, adjustHeight);
         }
-        private void StopArcAnimation()
+
+        private static void UpdateArc(Path arc, RotateTransform rotation, Geometry geometry, Point center,
+            double strokeThickness, double left, double top)
         {
-            _rotateTransform?.BeginAnimation(RotateTransform.AngleProperty, null);
-            _rotateTransform2?.BeginAnimation(RotateTransform.AngleProperty, null);
+            arc.Data = geometry;
+            arc.StrokeThickness = strokeThickness;
+            Canvas.SetLeft(arc, left);
+            Canvas.SetTop(arc, top);
+
+            // Moving the center keeps a running animation going; the spin does not restart when the control is resized.
+            rotation.CenterX = center.X;
+            rotation.CenterY = center.Y;
         }
-        private void StartArcAnimation()
+
+        /// <summary>
+        /// Runs the animation only while the indicator is active and can actually be seen.
+        /// </summary>
+        private void UpdateSpin()
         {
-            if (_rotateTransform != null)
+            bool shouldSpin = IsActive && IsVisible;
+            if (shouldSpin == _isSpinning)
             {
-                // Create the rotation animation
-                DoubleAnimation rotateAnimation = new()
-                {
-                    From = 0,
-                    To = 360,
-                    Duration = new Duration(TimeSpan.FromSeconds(1)),
-                    RepeatBehavior = RepeatBehavior.Forever
-                };
-
-                // Apply the animation to the RotateTransform's AngleProperty
-                _rotateTransform.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
+                return;
             }
-            if (_rotateTransform2 != null)
-            {
-                // Create the rotation animation
-                DoubleAnimation rotateAnimation = new()
-                {
-                    From = 360,
-                    To = 0,
-                    Duration = new Duration(TimeSpan.FromMilliseconds(800)),
-                    RepeatBehavior = RepeatBehavior.Forever
-                };
+            _isSpinning = shouldSpin;
 
-                // Apply the animation to the RotateTransform's AngleProperty
-                _rotateTransform2.BeginAnimation(RotateTransform.AngleProperty, rotateAnimation);
-            }
+            // Passing null removes the animation, which also stops its clock.
+            _rotateTransform.BeginAnimation(RotateTransform.AngleProperty, shouldSpin ? ClockwiseSpin : null);
+            _rotateTransform2.BeginAnimation(RotateTransform.AngleProperty, shouldSpin ? CounterClockwiseSpin : null);
+        }
+
+        private void OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            UpdateSpin();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            RenderArc();
-
-
+            UpdateShapes();
         }
     }
 }

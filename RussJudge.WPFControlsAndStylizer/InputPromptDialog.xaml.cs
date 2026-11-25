@@ -1,21 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
     /// <summary>
-    /// Interaction logic for InputPromptWindow.xaml
+    /// A small dialog that asks the user for a string.  Open it with <see cref="ShowDialog(string, string, string)"/>.
     /// </summary>
     public partial class InputPromptDialog : Window
     {
@@ -45,6 +33,10 @@ namespace RussJudge.WPFControlsAndStylizer
         }
         private InputPromptDialog()
         {
+            // The window uses DialogWindowStyle; make sure it can be found even when the application did not
+            // merge StylizerDictionary.xaml into its resources.
+            StylizerResources.EnsureAvailable(this);
+
             InitializeComponent();
             DataContext = this;
         }
@@ -79,6 +71,17 @@ namespace RussJudge.WPFControlsAndStylizer
             {
                 this.SetValue(ValueProperty, value);
             }
+        }
+
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+
+            // Let the user type straight away; typing replaces the default value.
+            // This is done here rather than in Loaded because Loaded is raised before the binding has put the
+            // default value into the TextBox, and setting the text afterwards would clear the selection again.
+            ValueTextBox.Focus();
+            ValueTextBox.SelectAll();
         }
 
         private void OnOK(object sender, RoutedEventArgs e)

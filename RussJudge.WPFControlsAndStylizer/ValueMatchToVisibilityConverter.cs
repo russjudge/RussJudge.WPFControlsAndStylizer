@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
@@ -15,7 +11,17 @@ namespace RussJudge.WPFControlsAndStylizer
     /// </summary>
     internal class ValueMatchToVisibilityConverter : IValueConverter
     {
-        public object Convert(object? value, Type targetType, object parameter, CultureInfo culture)
+        // Each distinct converter parameter is parsed once.  See NullToVisibilityConverter.
+        private static readonly ConcurrentDictionary<string, ParsedParameter> ParsedParameters = new();
+
+        private sealed class ParsedParameter(string[] parms)
+        {
+            public string Operator { get; } = parms[0];
+            public string CompareValue { get; } = parms[1];
+            public VisibilityPair Options { get; } = new(NullToVisibilityConverter.ParmsToVisibility(2, parms));
+        }
+
+        public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null)
             {
@@ -25,11 +31,9 @@ namespace RussJudge.WPFControlsAndStylizer
             {
                 if (parameter is string parm)
                 {
-                    var parms = parm.Split("|");
-                    var visibilityOptions = NullToVisibilityConverter.ParmsToVisibility(2, parms);
+                    ParsedParameter parsed = ParsedParameters.GetOrAdd(parm, p => new ParsedParameter(p.Split('|')));
 
-                    var retVal = OperatorTest(value, parms[0], parms[1]) ? visibilityOptions.Item1 : visibilityOptions.Item2;
-                    return retVal ?? DependencyProperty.UnsetValue;
+                    return OperatorTest(value, parsed.Operator, parsed.CompareValue) ? parsed.Options.First : parsed.Options.Second;
                 }
                 else
                 {
@@ -38,7 +42,7 @@ namespace RussJudge.WPFControlsAndStylizer
             }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

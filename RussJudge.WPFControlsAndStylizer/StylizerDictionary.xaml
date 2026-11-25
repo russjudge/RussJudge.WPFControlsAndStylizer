@@ -1,9 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:clr="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:RussJudge.WPFControlsAndStylizer"
-    xmlns:shell="http://schemas.microsoft.com/netfx/2009/xaml/presentation"
     x:Name="StylizerResourceDictionary">
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -85,12 +83,12 @@
         <Setter Property="MinHeight" Value="24" />
         <Setter Property="IsActive" Value="{Binding Source={x:Static local:GlobalControl.Current}, Path=IsActive}" />
         <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource Self}}" Value="True">
+            <Trigger Property="IsActive" Value="True">
                 <Setter Property="Visibility" Value="Visible" />
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource Self}}" Value="False">
+            </Trigger>
+            <Trigger Property="IsActive" Value="False">
                 <Setter Property="Visibility" Value="Collapsed" />
-            </DataTrigger>
+            </Trigger>
         </Style.Triggers>
     </Style>
     <Style BasedOn="{StaticResource BaseActivityIndicatorStyle}" TargetType="{x:Type local:ActivityIndicator}" />
@@ -165,6 +163,8 @@
         <Setter Property="BorderBrush" Value="{DynamicResource BorderStyle}" />
         <Setter Property="Foreground" Value="{DynamicResource ForegroundStyle}" />
         <Setter Property="BorderThickness" Value="2" />
+        <!--  Wires up the title bar buttons and keeps a maximized window off the Taskbar (see Attached.IsStylized).  -->
+        <Setter Property="local:Attached.IsStylized" Value="True" />
     </Style>
     <!--  DialogWindowStyle  -->
 
@@ -172,11 +172,6 @@
         x:Key="DialogWindowStyle"
         BasedOn="{StaticResource BaseWindowStyle}"
         TargetType="{x:Type Window}">
-        <Setter Property="shell:WindowChrome.WindowChrome">
-            <Setter.Value>
-                <shell:WindowChrome />
-            </Setter.Value>
-        </Setter>
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="ResizeMode" Value="NoResize" />
 
@@ -191,16 +186,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
+                    <!--
+                        Do not bind the Width/Height of these elements to the Window.  The window keeps those properties
+                        in sync with its real size, which pins the template to that size and breaks SizeToContent.
+                    -->
                     <Border
                         x:Name="PART_WindowBorder"
-                        Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid
                             x:Name="PART_LayoutRoot"
-                            Width="{TemplateBinding Width}"
-                            Height="{TemplateBinding Height}"
                             Background="{TemplateBinding Background}"
                             ClipToBounds="True">
 
@@ -275,11 +270,6 @@
         x:Key="StandardWindowStyle"
         BasedOn="{StaticResource BaseWindowStyle}"
         TargetType="{x:Type Window}">
-        <Setter Property="shell:WindowChrome.WindowChrome">
-            <Setter.Value>
-                <shell:WindowChrome />
-            </Setter.Value>
-        </Setter>
         <Setter Property="WindowStyle" Value="None" />
         <Setter Property="ResizeMode" Value="CanResizeWithGrip" />
         <Setter Property="WindowChrome.WindowChrome">
@@ -290,16 +280,16 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Window">
+                    <!--
+                        Do not bind the Width/Height of these elements to the Window.  The window keeps those properties
+                        in sync with its real size, which pins the template to that size and breaks SizeToContent.
+                    -->
                     <Border
                         x:Name="PART_WindowBorder"
-                        Width="{TemplateBinding Width}"
-                        Height="{TemplateBinding Height}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid
                             x:Name="PART_LayoutRoot"
-                            Width="{TemplateBinding Width}"
-                            Height="{TemplateBinding Height}"
                             Background="{TemplateBinding Background}"
                             ClipToBounds="True">
 
@@ -406,6 +396,24 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <!--
+                A maximized window exactly fills the work area of its monitor (see Attached.IsStylized), so the border
+                and the resize edges would sit on the edges of the screen.  Remove both while maximized so that the
+                title bar and its buttons reach the very edge of the screen.
+            -->
+            <Trigger Property="WindowState" Value="Maximized">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="WindowChrome.WindowChrome">
+                    <Setter.Value>
+                        <WindowChrome
+                            CaptionHeight="{Binding Path=(SystemParameters.WindowNonClientFrameThickness).Top}"
+                            ResizeBorderThickness="0"
+                            UseAeroCaptionButtons="False" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
     </Style>
     <ControlTemplate x:Key="PlaceholderTextBoxTemplate" TargetType="{x:Type TextBox}">
 
@@ -428,28 +436,13 @@
                     x:Name="PART_PlaceholderText"
                     Margin="5,0,0,0"
                     Content="{Binding Path=(local:Attached.Placeholder), RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"
+                    IsHitTestVisible="False"
                     Opacity="0.5"
                     Visibility="{TemplateBinding Text,
                                                  Converter={StaticResource NullToVisibilityConverter},
                                                  ConverterParameter='Visible|Collapsed'}" />
             </Grid>
             <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualState x:Name="Disabled">
-                        <Storyboard>
-                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-                                <EasingColorKeyFrame KeyTime="0" Value="{x:Static SystemColors.InactiveBorderColor}" />
-                            </ColorAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState x:Name="ReadOnly">
-                        <Storyboard>
-                            <ColorAnimationUsingKeyFrames Storyboard.TargetName="PART_Border" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)">
-                                <EasingColorKeyFrame KeyTime="0" Value="{x:Static SystemColors.InactiveBorderColor}" />
-                            </ColorAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                </VisualStateGroup>
                 <VisualStateGroup x:Name="FocusStates">
                     <VisualState x:Name="Focused">
                         <Storyboard>
@@ -478,7 +471,16 @@
             </VisualStateManager.VisualStateGroups>
         </Border>
         <ControlTemplate.Triggers>
+            <!--
+                The read-only and disabled backgrounds are triggers rather than visual states.  The visual states had no
+                "Normal" state to return to, so the TextBox stayed grey once it had been disabled, and they animated the
+                colour of the Background brush, which throws when the Background is not a SolidColorBrush.
+            -->
+            <Trigger Property="IsReadOnly" Value="true">
+                <Setter TargetName="PART_Border" Property="Background" Value="{x:Static SystemColors.InactiveBorderBrush}" />
+            </Trigger>
             <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="PART_Border" Property="Background" Value="{x:Static SystemColors.InactiveBorderBrush}" />
                 <Setter TargetName="PART_Border" Property="Opacity" Value="0.56" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="true">
@@ -639,7 +641,6 @@
                         <Trigger Property="IsFocused" Value="true">
                             <Setter TargetName="PART_GlassOverlay" Property="Rectangle.Opacity" Value="1" />
                             <Setter TargetName="PART_OuterRectangle" Property="Rectangle.Stroke" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
-                            <Setter TargetName="PART_GlassOverlay" Property="Rectangle.Opacity" Value="1" />
                         </Trigger>
 
                         <EventTrigger RoutedEvent="Mouse.MouseEnter">

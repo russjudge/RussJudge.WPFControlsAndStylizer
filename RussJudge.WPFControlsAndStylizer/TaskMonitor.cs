@@ -1,30 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Threading;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 
 namespace RussJudge.WPFControlsAndStylizer
 {
+    /// <summary>
+    /// Starts background tasks and keeps a bindable list of the ones that are still running.
+    /// </summary>
     public class TaskMonitor : DependencyObject
     {
         private TaskMonitor()
         {
-            BackgroundProcesses = [];
-
+            BackgroundProcesses = new ObservableCollection<NamedTaskItem>();
         }
+
         private static TaskMonitor? _current;
+
+        /// <summary>
+        /// The one TaskMonitor of the application.  It always belongs to the UI thread, whichever thread uses it first.
+        /// </summary>
         public static TaskMonitor Current
         {
             get
             {
-                _current ??= new();
-                return _current;
+                TaskMonitor? current = Volatile.Read(ref _current);
+                if (current == null)
+                {
+                    // No lock is held while waiting for the UI thread, so two threads racing here cannot deadlock.
+                    // Should both create an instance, the first one stored wins and the other is dropped.
+                    TaskMonitor created = StylizerResources.CreateOnUiThread(() => new TaskMonitor());
+                    current = Interlocked.CompareExchange(ref _current, created, null) ?? created;
+                }
+                return current;
             }
         }
+
         /// <summary>
         /// Add a delegate action as a background Task.
         /// </summary>
@@ -35,10 +44,15 @@ namespace RussJudge.WPFControlsAndStylizer
         {
             Current.InternalAddTask(action, description);
         }
+
         private void InternalAddTask(
             Action<CancellationToken> action,
             string description)
         {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
 
             CancellationTokenSource cancellationTokenSource = new();
             CancellationToken token = cancellationTokenSource.Token;
@@ -65,56 +79,92 @@ namespace RussJudge.WPFControlsAndStylizer
             var task = Task.Run(cancellableAction, token);
 
             NamedTaskItem item = new(description, task, cancellationTokenSource);
-            Dispatcher.Invoke(() =>
+            if (CheckAccess())
             {
-                IsActive = true;
+                Register(item);
+            }
+            else
+            {
+                Dispatcher.Invoke(() => Register(item));
+            }
+
+            // Hand the clean-up to the UI thread without waiting for it: the worker thread that finished the task is
+            // released straight away instead of being blocked until the UI thread gets around to it.
+            task.ContinueWith(
+                _ => Dispatcher.BeginInvoke(new Action(() => Unregister(item))),
+                CancellationToken.None,
+                TaskContinuationOptions.ExecuteSynchronously,
+                TaskScheduler.Default);
+        }
+
+        private void Register(NamedTaskItem item)
+        {
+            IsActive = true;
+            if (SyncIsActiveWithGlobalControl)
+            {
+                GlobalControl.Current.IsActive = true;
+            }
+            BackgroundProcesses.Add(item);
+        }
+
+        private void Unregister(NamedTaskItem item)
+        {
+            BackgroundProcesses.Remove(item);
+            if (BackgroundProcesses.Count == 0)
+            {
+                IsActive = false;
                 if (SyncIsActiveWithGlobalControl)
                 {
-                    GlobalControl.Current.IsActive = true;
+                    GlobalControl.Current.IsActive = false;
                 }
-                BackgroundProcesses.Add(item);
-            });
-
-
-            task.ContinueWith(t =>
-            {
-
-                Dispatcher.Invoke(() =>
-                {
-                    BackgroundProcesses.Remove(item);
-                    if (BackgroundProcesses.Count == 0)
-                    {
-                        IsActive = false;
-                        if (SyncIsActiveWithGlobalControl)
-                        {
-                            GlobalControl.Current.IsActive = false;
-                        }
-                    }
-                });
-                cancellationTokenSource.Dispose();
-            }, TaskContinuationOptions.ExecuteSynchronously);
-
+            }
+            item.CancelTokenSource.Dispose();
         }
+
         /// <summary>
         /// Cancel all background tasks that are currently part of the monitor.
         /// </summary>
         public static void CancelAllTasks()
         {
-            Current.Dispatcher.Invoke(() =>
+            TaskMonitor monitor = Current;
+            if (monitor.CheckAccess())
             {
-                foreach (var item in Current.BackgroundProcesses)
-                {
-                    Cancel(item);
-                }
-            });
+                monitor.CancelAll();
+            }
+            else
+            {
+                monitor.Dispatcher.Invoke(monitor.CancelAll);
+            }
         }
+
+        private void CancelAll()
+        {
+            // Cancel a copy of the list: a task that reacts to the cancellation must not be able to change the
+            // collection while it is being walked.
+            foreach (var item in BackgroundProcesses.ToArray())
+            {
+                Cancel(item);
+            }
+        }
+
         /// <summary>
         /// Cancel the specified background task. For this to have any effect, the delegate Task must process the CancellationToken.
         /// </summary>
-        /// <param name="item"></param>
+        /// <param name="item">The task to cancel.  Nothing happens when the task has already finished.</param>
         public static void Cancel(NamedTaskItem item)
         {
-            item.CancelTokenSource.Cancel();
+            if (item == null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+            try
+            {
+                item.CancelTokenSource.Cancel();
+            }
+            catch (ObjectDisposedException)
+            {
+                // The task has already finished and its CancellationTokenSource is gone: there is nothing to cancel.
+            }
         }
 
         public static readonly DependencyProperty BackgroundProcessesProperty =

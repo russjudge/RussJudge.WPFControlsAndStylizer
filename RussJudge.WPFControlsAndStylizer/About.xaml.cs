@@ -1,17 +1,20 @@
-﻿using System.Drawing;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Windows;
 
 
 namespace RussJudge.WPFControlsAndStylizer
 {
     /// <summary>
-    /// Interaction logic for About.xaml
+    /// A standard "About" window that shows the attributes of an assembly.  Open it with <see cref="DisplayAbout"/>.
     /// </summary>
     public partial class About : Window
     {
         private About(Assembly assembly)
         {
+            // The window uses DialogWindowStyle; make sure it can be found even when the application did not
+            // merge StylizerDictionary.xaml into its resources.
+            StylizerResources.EnsureAvailable(this);
+
             var nm = assembly.GetName();
 
             var vers = nm.Version;
@@ -223,19 +226,8 @@ namespace RussJudge.WPFControlsAndStylizer
         /// <param name="assembly">The Assembly from which to get information.  Default is the Entry Assembly.</param>
         public static void DisplayAbout(string otherDescriptiveInfo = "", Assembly? assembly = null)
         {
-            Assembly? assm = null;
-            if (assembly == null)
-            {
-                var asm = System.Reflection.Assembly.GetEntryAssembly();
-                if (asm != null)
-                {
-                    assm = asm;
-                }
-                else
-                {
-                    return;
-                }
-            }
+            // Use the assembly that was passed in; fall back to the entry assembly only when none was given.
+            Assembly? assm = assembly ?? Assembly.GetEntryAssembly();
             if (assm != null)
             {
                 About win = new(assm)

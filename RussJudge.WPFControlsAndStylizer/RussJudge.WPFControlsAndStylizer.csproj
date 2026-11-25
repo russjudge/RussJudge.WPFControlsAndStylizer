@@ -1,17 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-
-    <TargetFrameworks>;net8.0-windows7.0;net9.0-windows7.0</TargetFrameworks>
-    <Nullable>enable</Nullable>
+    <!-- The list of supported frameworks lives in ..\Directory.Build.props -->
+    <TargetFrameworks>$(StylizerTargetFrameworks)</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>rjicon.ico</ApplicationIcon>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- CS1591: not every public member has an XML comment yet. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>WPF Controls and Stylizer</Title>
     <Authors>Russ Judge</Authors>
     <Description>A collection of styles that I've thrown together and found useful.  Includes an ActivityIndicator and a "Placeholder" watermark for TextBox.</Description>
-    <Copyright>Copyright (c) Russ Judge 2024, 2025</Copyright>
+    <Copyright>Copyright (c) Russ Judge 2024-2026</Copyright>
     <PackageProjectUrl>https://russjudge.com</PackageProjectUrl>
     <PackageIcon>rjicon2.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -19,38 +23,21 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>WPF;Style;Button;Activity Indicator;Animated button;Placeholder</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <VersionPrefix>1.1.2</VersionPrefix>
-    <AssemblyVersion>1.1.2</AssemblyVersion>
-    <FileVersion>1.1.2</FileVersion>
-    <PackageReleaseNotes>Fixed an issue with Maximize for windows with the StandardWindow style. Previous released fixed maximize if the maximize button was pressed, but there were still issues if maximzed by restoring from a minimized state, or maximizing by dragging the window to the border of the Desktop.  Like previously, it looks like Microsoft lacks competency in some areas, as I had to code work-arounds to their ineptness.</PackageReleaseNotes>
+    <VersionPrefix>1.2.0</VersionPrefix>
+    <AssemblyVersion>1.2.0</AssemblyVersion>
+    <FileVersion>1.2.0</FileVersion>
+    <PackageReleaseNotes>Run through Claude Code: Now targets .NET Framework 4.5 - 4.8.1 and .NET 5 - 11.  Bug fixes and performance improvements - see the README for details.</PackageReleaseNotes>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\window.png" />
-  </ItemGroup>
+  <!--
+    Resources\*.png and rjicon.ico are left as ordinary (None) project items on purpose.  They are embedded through
+    Properties\Resources.resx / ApplicationIcon.  Declaring them as Content would pack them as contentFiles, which
+    copies them into every project that references the NuGet package.
+  -->
 
   <ItemGroup>
-    <Content Include="Resources\rjicon2.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\window.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="rjicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Include="..\rjicon2.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System.Windows.Forms" />
+    <None Include="..\README.md" Pack="True" PackagePath="\" />
+    <None Include="..\rjicon2.png" Pack="True" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -66,13 +53,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Resources\rjicon2.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
   </ItemGroup>
 
 </Project>

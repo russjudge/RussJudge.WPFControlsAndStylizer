@@ -26,7 +26,7 @@
             Click="OnOK" />
 
         <Label
-            Visibility="{Binding AppTitle, ElementName=uc, Converter={StaticResource NullToVisibilityConverter}}"
+            Visibility="{Binding AppTitle, ElementName=uc, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter='Collapsed|Visible'}"
             DockPanel.Dock="Top"
             FontSize="16"
             HorizontalAlignment="Center"

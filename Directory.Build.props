@@ -1,0 +1,29 @@
+﻿<Project>
+
+  <!--
+    Shared build settings for every project in this repository.
+
+    StylizerTargetFrameworks is the single place to add or remove a supported framework.
+    .NET Framework 4.5 is the lower bound there: it is the first version that ships WindowChrome and
+    SystemCommands in WPF itself.  .NET Core 3.0 / 3.1 are deliberately not targeted; .NET 5 is the oldest
+    modern .NET that is supported.
+    Reference assemblies for frameworks that are not installed on the build machine are restored from
+    NuGet automatically, so nothing extra needs to be installed to build the older targets.
+  -->
+  <PropertyGroup>
+    <StylizerNetFrameworkTargets>net45;net451;net452;net46;net461;net462;net47;net471;net472;net48;net481</StylizerNetFrameworkTargets>
+    <StylizerNetTargets>net5.0-windows7.0;net6.0-windows7.0;net7.0-windows7.0;net8.0-windows7.0;net9.0-windows7.0;net10.0-windows7.0;net11.0-windows7.0</StylizerNetTargets>
+    <StylizerTargetFrameworks>$(StylizerNetFrameworkTargets);$(StylizerNetTargets)</StylizerTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <!-- The older frameworks default to C# 7.3; the code base uses newer language features on every target. -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+
+    <!-- Out-of-support frameworks are targeted on purpose, so do not warn about them (NETSDK1138). -->
+    <CheckEolTargetFramework>false</CheckEolTargetFramework>
+  </PropertyGroup>
+
+</Project>
